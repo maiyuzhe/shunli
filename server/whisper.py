@@ -9,7 +9,7 @@ API_TOKEN = open('./.env', "r").read()
 API_URL = "https://api-inference.huggingface.co/models/jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn"
 headers = {"Authorization": f"Bearer {API_TOKEN}"}
 
-file_name = "09-1.mp3"
+file_name = "09-2.mp3"
 if file_name.split('.')[0] not in os.listdir():
     convert_file(file_name)
 
@@ -30,6 +30,7 @@ for flac_audio in natsorted(os.listdir(f'./{directory}')):
         print("API unavailable")
     else:
         print(f"transcribing {flac_audio}")
+        print(output["text"])
         full_text.append(f"{output['text']}。")
 
 transcribed_text = " ".join(full_text)
