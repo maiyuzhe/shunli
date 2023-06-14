@@ -1,22 +1,15 @@
 const { useEffect, useState } = require("react");
 import AudioEntry from "./audioentry";
 
-function AudioList({setAudio}){
+function AudioList({audioFiles}){
 
-    const [audioFiles, setAudioFiles] = useState([])
-
-    useEffect(() => {
-        fetch('http://localhost:5000/audio_upload')
-        .then(res => res.json())
-        .then(data => setAudioFiles(data))
-        .catch(error => console.log(error))
-    },[])
+    
 
     return (
         <ul>
-            {audioFiles.map((audioFile) => {
-                return <AudioEntry setAudio={setAudio} id = {audioFile.id} key ={audioFile.id} name={audioFile.filename}/>
-            })}
+            {audioFiles ? audioFiles.map((audioFile) => {
+                return <AudioEntry id = {audioFile.id} key ={audioFile.id} name={audioFile.filename}/>
+            }) : <p>upload files</p>}
         </ul>
     )
 }

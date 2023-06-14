@@ -1,13 +1,15 @@
-function AudioEntry({id, name, setAudio}){
+import Playback from "./playback"
 
-    function switchAudio(){
-        console.log(`${name} selected.`)
-        setAudio(id)
-    }
+function AudioEntry({id, name}){
 
     return(
-        <li onClick={switchAudio}>
-            {name}
+        <li className="flex">
+            <a>
+              {name}
+            </a>
+            <a>
+              <Playback audioId={id}/>
+            </a>
         </li>
     )
 }

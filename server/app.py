@@ -28,8 +28,8 @@ class UploadFile(Resource):
         db.session.add(upload)
         db.session.commit()
         return {
-            "filename": new_file.filename,
-            "id": new_file.id
+            "filename": upload.filename,
+            "id": upload.id
             }, 201
     def get(self):
         audio_files = [{"id": upload.id, "filename": upload.filename} for upload in Upload.query.all()]

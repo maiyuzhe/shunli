@@ -1,30 +1,32 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import AudioList from "./audiolist"
 import Navbar from "./navbar"
-import Playback from "./playback"
 import Upload from "./upload"
 
 function Home() {
+  
+  const [audioFiles, setAudioFiles] = useState([])
 
-  const [audioId, setAudio] = useState(1)
-
-  function changeTrack(id){
-    console.log(`changed to track with id of ${id}`)
-    setAudio(id)
-    console.log(audioId)
-  }
+  useEffect(() => {
+      fetch('http://localhost:5000/audio_upload')
+      .then(res => res.json())
+      .then(data => setAudioFiles(data))
+      .catch(error => console.log(error))
+  },[])
 
   function appendAudio(data){
-    console.log(data)
+    setAudioFiles([...audioFiles, data])
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Navbar/>
-      <Upload appendAudio={appendAudio}/>
-      <AudioList setAudio={changeTrack}/>
-      <Playback audioId={audioId}/>
+      <div>
+      https://blog.logrocket.com/building-audio-player-react/
+        <Upload appendAudio={appendAudio}/>
+        <AudioList audioFiles={audioFiles}/>
+      </div>
     </main>
   )
 }
