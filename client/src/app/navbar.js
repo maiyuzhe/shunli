@@ -21,7 +21,7 @@ function Navbar(){
     return (
         <div className="flex justify-items-stretch fixed top-0 bg-white w-screen p-4 bg-opacity-50 border-b-2 border-white">
             <h1 className="text-xl justify-self-start text-black font-gothic">
-                SHUNLI
+                顺利
             </h1>
             <div ref={menuRef}>
                 <div

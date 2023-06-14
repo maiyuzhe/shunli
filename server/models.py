@@ -3,7 +3,6 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
-from noconflict import classmaker
 
 convention = {
   "ix": "ix_%(column_0_label)s",
@@ -18,13 +17,13 @@ metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metadata)
 
 class Upload(db.Model):
-    __metaclass__ = classmaker()
     __tablename__ = "uploads"
-    id: db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(50))
     data = db.Column(db.LargeBinary)
 
-class Transcriptions(db.Model):
-  id: db.Column(db.Integer, primary_key=True)
+class Transcription(db.Model):
+  __tablename__ = "transcriptions"
+  id = db.Column(db.Integer, primary_key=True)
   filename = db.Column(db.String(50))
   transcription = db.Column(db.String(50))

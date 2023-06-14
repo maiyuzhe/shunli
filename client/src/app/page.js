@@ -7,9 +7,10 @@ import Upload from "./upload"
 function Home() {
   
   const [audioFiles, setAudioFiles] = useState([])
+  const [uploadTrue, setUpload] = useState(false)
 
   useEffect(() => {
-      fetch('http://localhost:5000/audio_upload')
+      fetch('http://localhost:5000/audio_stream')
       .then(res => res.json())
       .then(data => setAudioFiles(data))
       .catch(error => console.log(error))
@@ -21,12 +22,11 @@ function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Navbar/>
-      <div>
-      https://blog.logrocket.com/building-audio-player-react/
-        <Upload appendAudio={appendAudio}/>
+      <div className="">
+        {uploadTrue ? <Upload appendAudio={appendAudio}/> : <button onClick={() => setUpload(true)}>Upload File</button>}
         <AudioList audioFiles={audioFiles}/>
       </div>
+      <Navbar/>
     </main>
   )
 }

@@ -1,42 +1,28 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import {IoPlayBackSharp, IoPlayForwardSharp, IoPlaySkipBackSharp, IoPlaySkipForwardSharp, IoPlaySharp, IoPauseSharp,} from 'react-icons/io5'
 
-function Playback({audioId}){
+function Playback({id}){
 
-    const [audioPlay, setPlay] = useState(false)
+    const [play, setPlay] = useState(false)
 
-    
+    let audioRef = useRef()
 
-    function playAudio(){
-        // if(ctx.state == "running"){
-        //     console.log(ctx)
-        //     fetch(`http://localhost:5000/audio_download/${audioId}`)
-        //     .then(data => data.arrayBuffer())
-        //     .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
-        //     .then(decodedAudio => {
-        //         const startAudio = ctx.createBufferSource()
-        //         startAudio.buffer = decodedAudio
-        //         startAudio.connect(ctx.destination)
-        //         startAudio.start(ctx.currentTime)
-        //         console.log(ctx)
-        //     })
-        //     .catch(error => console.log(error))
-        // }
-        // else if(ctx.state === "suspended"){
-        //     ctx.resume()
-        // }
-        // else{
-        //     ctx.suspend()
-        // }
-        const audio = new Audio(`http://localhost:5000/audio_download/${audioId}`)
-        console.log(audio)
-        !audioPlay ? audio.play() : audio.pause()
-        setPlay(!audioPlay)
+    function toggleAudio(){
+        !play ? audioRef.current.play() : audioRef.current.pause()
+        setPlay(!play)
     }
 
     return (
-        <div className="bg-white text-black rounded p-2 m-2 hover:bg-red-300">
-            <button onClick={playAudio}><IoPlaySharp/></button>
+        <div className="flex bg-black text-white w-6 h-6 rounded hover:bg-red-300 justify-center">
+            <audio 
+                ref={audioRef} 
+                src={`http://localhost:5000/audio_stream/${id}`}
+            />
+            <button 
+                onClick={toggleAudio}
+            >
+                {play ? <IoPauseSharp/> : <IoPlaySharp/>}
+            </button>
         </div>
     )
 

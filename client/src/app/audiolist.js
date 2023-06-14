@@ -6,7 +6,7 @@ function AudioList({audioFiles}){
     
 
     return (
-        <ul>
+        <ul className="flex-auto w-full">
             {audioFiles ? audioFiles.map((audioFile) => {
                 return <AudioEntry id = {audioFile.id} key ={audioFile.id} name={audioFile.filename}/>
             }) : <p>upload files</p>}

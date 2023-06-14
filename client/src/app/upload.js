@@ -8,7 +8,7 @@ function Upload({appendAudio}) {
         console.log(file.type, file.size)
         formData.append('file', file)
         console.log(formData)
-        fetch('http://localhost:5000/audio_upload', {
+        fetch('http://localhost:5000/audio_stream', {
           method: "POST",
           body: formData
         })

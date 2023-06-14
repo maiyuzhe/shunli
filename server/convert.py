@@ -5,10 +5,9 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
  
 
-file_name = "sample3.flac"
 def convert_file(file_name):
     if file_name.split('.')[1] == "flac":
-        file_path = PurePath("sample1.flac")
+        file_path = file_name
 
         flac_tmp_audio_data = AudioSegment.from_file(file_path, file_path.suffix[1:])
 
@@ -16,7 +15,7 @@ def convert_file(file_name):
         print('flac converted to wav.')
     if file_name.split('.')[1] =="mp3":
         src = file_name
-        dst = "sample1.wav"                                                     
+        dst = f"{file_name.split('.')[0]}.wav"                                                     
         sound = AudioSegment.from_mp3(src)
         sound.export(dst, format="wav")
 
@@ -27,7 +26,7 @@ def convert_file(file_name):
     if new_directory not in os.listdir():
         os.mkdir(new_directory)
 
-    sound_file = AudioSegment.from_wav("sample1.wav")
+    sound_file = AudioSegment.from_wav(f'{new_directory}.wav')
     audio_chunks = split_on_silence(sound_file, min_silence_len=1000, silence_thresh=-40 )
     
     for i, chunk in enumerate(audio_chunks):
