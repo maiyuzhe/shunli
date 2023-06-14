@@ -3,6 +3,16 @@ import { useEffect, useState } from "react"
 function Transcription({audioRef, id}){
 
     const [text, setText] = useState("loading...")
+    console.log(id)
+
+    function transcribe(id){
+        fetch(`http://localhost:5000/transcriptions/${id}`, {
+          method: "POST"
+        })
+        .then(res=> res.json())
+        .then(data => setText(data))
+        .catch(error => console.log(error))
+    }
 
     useEffect(()=> {
         fetch(`http://localhost:5000/transcriptions/${id}`)
@@ -18,6 +28,7 @@ function Transcription({audioRef, id}){
         >
           {text}
         </p>
+        <button onClick={transcribe}>TRANSCRIBE</button>
       </div>
     )
 }
