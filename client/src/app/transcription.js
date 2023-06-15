@@ -1,25 +1,33 @@
 import { useEffect, useState } from "react"
+import Loader from "./loader"
 
 function Transcription({audioRef, id}){
 
-    const [text, setText] = useState("loading...")
-    console.log(id)
+    const [text, setText] = useState("")
+    const [loading, setLoad] = useState(true)
 
-    function transcribe(id){
-        fetch(`http://localhost:5000/transcriptions/${id}`, {
-          method: "POST"
+    function transcribe(){
+        setLoad(false)
+        setText("Did you know that patience is a virtue?")
+        const audio_id = id
+        fetch(`http://localhost:5000/transcriptions`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            audio_id: audio_id
+          })
         })
         .then(res=> res.json())
-        .then(data => setText(data))
+        .then(data => {
+          setText(data.transcription)
+          setLoad(true)
+        })
         .catch(error => console.log(error))
     }
 
-    useEffect(()=> {
-        fetch(`http://localhost:5000/transcriptions/${id}`)
-        .then(res => res.json())
-        .then(data => setText(data))
-        .catch(error => setText("API offline"))
-    })
+
 
     return (
         <div className={"absolute top-10"}>
@@ -28,7 +36,9 @@ function Transcription({audioRef, id}){
         >
           {text}
         </p>
-        <button onClick={transcribe}>TRANSCRIBE</button>
+        <div className="flex">
+          {!loading? <Loader/> : <button onClick={transcribe}>TRANSCRIBE</button>}
+        </div>
       </div>
     )
 }

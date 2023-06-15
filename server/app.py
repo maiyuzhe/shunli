@@ -56,9 +56,33 @@ class DownloadById(Resource):
 api.add_resource(DownloadById, '/audio_stream/<int:id>')
 
 class TransciptionById(Resource):
-    def post(self, id):
-        transcription = speech_to_text(f'http://localhost:5000/audio_stream/{id}')
-        audio_name = f'{id}.mp3'
+    # def post(self, id):
+    #     transcription = speech_to_text(f'http://localhost:5000/audio_stream/{id}')
+    #     audio_name = f'{id}.mp3'
+    #     new_transcription = Transcription(
+    #         filename = audio_name,
+    #         transcription = transcription
+    #     )
+    #     db.session.add(new_transcription)
+    #     db.session.commit()
+    #     return {
+    #         "filename": new_transcription.filename,
+    #         "id": new_transcription.id,
+    #         "transcription": new_transcription.transcription
+    #     }, 201
+    def get(self, id):
+        transcription = Transcription.query.filter_by(id=id).first()
+        return(transcription.transcription)
+api.add_resource(TransciptionById, '/transcriptions/<int:id>')
+
+class Transcriptions(Resource):
+    def post(self):
+        print(request.is_json)
+        print(request.headers)
+        print(request.json)
+        audio = request.json['audio_id']
+        transcription = speech_to_text(f'http://localhost:5000/audio_stream/{audio}')
+        audio_name = f'{audio}.mp3'
         new_transcription = Transcription(
             filename = audio_name,
             transcription = transcription
@@ -70,7 +94,4 @@ class TransciptionById(Resource):
             "id": new_transcription.id,
             "transcription": new_transcription.transcription
         }, 201
-    def get(self, id):
-        transcription = Transcription.query.filter_by(id=id).first()
-        return(transcription.transcription)
-api.add_resource(TransciptionById, '/transcriptions/<int:id>')
+api.add_resource(Transcriptions, '/transcriptions') 

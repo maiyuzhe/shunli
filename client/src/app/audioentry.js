@@ -1,14 +1,22 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Playback from "./playback"
 import Transcription from "./transcription"
 
 function AudioEntry({id, name}){
 
   const [load, setLoad] = useState(false)
+  const [startText, setText] = useState("")
 
   function toggleDiv(){
     setLoad(!load)
   }
+
+  useEffect(()=> {
+    fetch(`http://localhost:5000/transcriptions/${id}`)
+    .then(res => res.json())
+    .then(data => setText(data))
+    .catch(error => setText("API offline"))
+  }, [])
 
   return(
       <li 
@@ -28,7 +36,7 @@ function AudioEntry({id, name}){
         >
           {load ? <Playback id={id}/> : ""}
         </a>
-        {load ? <Transcription id={id}/>: ""}
+        {load ? <Transcription id={id} start={startText}/>: ""}
       </li>
   )
 }

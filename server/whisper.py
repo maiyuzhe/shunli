@@ -3,6 +3,7 @@ from natsort import natsorted
 from convert import convert_file
 import requests
 import json
+import shutil
 
 API_TOKEN = open('./.env', "r").read()
 
@@ -15,6 +16,14 @@ def query(filename):
     response = requests.post(API_URL, headers=headers, data=data)
     return response.json()
 
+def clean_up(file_name):
+    if f'{file_name}.mp3' in os.listdir():
+        os.remove(f'{file_name}.mp3')
+    if f'{file_name}.wav' in os.listdir():
+        os.remove(f'{file_name}.wav')
+    shutil.rmtree(file_name)
+
+
 def speech_to_text(url):
     file_data = requests.get(url)
     file_name = url.split('/')[4]
@@ -23,14 +32,16 @@ def speech_to_text(url):
 
     if file_name not in os.listdir():
         convert_file(f'{file_name}.mp3')
+    else:
+        os.remove(f'{file_name}.mp3')
 
     full_text = []
 
     for flac_audio in natsorted(os.listdir(f'./{file_name}')):
-        # output = query(f"./{directory}/{flac_audio}")
-        output = {
-            "text": "something"
-        }
+        output = query(f"./{file_name}/{flac_audio}")
+        # output = {
+        #     "text": "something"
+        # }
         if "text" not in output:
             print(output)        
             print("API unavailable")
@@ -40,6 +51,10 @@ def speech_to_text(url):
             full_text.append(f"{output['text']}。")
 
     transcribed_text = str(" ".join(full_text))
+    if transcribed_text =="":
+        print("API Offline")
+    else:
+        clean_up(file_name)
 
     print(transcribed_text)
 
