@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+natsort = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+flask-restful = "*"
+flask-cors = "*"
+pathlib = "*"
+pydub = "*"
+requests = "*"
+
+[dev-packages]
+natsort = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+flask-restful = "*"
+flask-cors = "*"
+pathlib = "*"
+pydub = "*"
+
+[requires]
+python_version = "3.11"

@@ -1,0 +1,8 @@
+natsort
+flask
+flask_sqlalchemy
+flask_restful
+flask_cors
+pathlib
+pydub
+requests

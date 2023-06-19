@@ -1,10 +1,10 @@
-.env
-/server/.env
 /client/node_modules
-
 /client/.next
 
+/server/.env
+/server/__pycache__
 /server/instance
+#/server/requirements.txt
 
 # dependencies
 /node_modules
@@ -39,7 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
+#Definitely Don't Want these
 *.flac
 *.mp3
 *.wav
