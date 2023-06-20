@@ -35,19 +35,16 @@ function Navbar(){
                 </div> 
                 <div className={`${dropdownOpen ? `top-full opacity-100 visible` : 'top-[110%] invisible opacity-0'} absolute w-42 right-4 z-40 mt-2 rounded border-[.5px] border-light bg-white bg-opacity-50 py-1 shadow-card transition-all`}>
                     <a
-                        href="javascript:void(0)"
                         className="block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Account Details
                     </a>
                     <a
-                        href="javascript:void(0)"
                         className="block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Settings
                     </a>
                     <a
-                        href="javascript:void(0)"
                         className="block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Logout

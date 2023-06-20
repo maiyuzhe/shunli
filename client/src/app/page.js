@@ -17,6 +17,7 @@ function Home() {
   },[])
 
   function appendAudio(data){
+    console.log(data)
     setAudioFiles([...audioFiles, data])
   }
 

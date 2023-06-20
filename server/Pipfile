@@ -12,6 +12,7 @@ flask-cors = "*"
 pathlib = "*"
 pydub = "*"
 requests = "*"
+pytube = "*"
 
 [dev-packages]
 natsort = "*"

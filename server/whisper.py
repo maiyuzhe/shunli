@@ -39,9 +39,6 @@ def speech_to_text(url):
 
     for flac_audio in natsorted(os.listdir(f'./{file_name}')):
         output = query(f"./{file_name}/{flac_audio}")
-        # output = {
-        #     "text": "something"
-        # }
         if "text" not in output:
             print(output)        
             print("API unavailable")
@@ -52,6 +49,7 @@ def speech_to_text(url):
 
     transcribed_text = str(" ".join(full_text))
     if transcribed_text =="":
+        transcribed_text = "API Error, please transcribe again"
         print("API Offline")
     else:
         clean_up(file_name)

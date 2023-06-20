@@ -3,8 +3,6 @@ import AudioEntry from "./audioentry";
 
 function AudioList({audioFiles}){
 
-    
-
     return (
         <ul className="flex-auto w-full">
             {audioFiles ? audioFiles.map((audioFile) => {
