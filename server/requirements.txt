@@ -7,3 +7,5 @@ pathlib
 pydub
 requests
 pytube
+validators
+werkzeug

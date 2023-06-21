@@ -7,19 +7,16 @@ def yt2wav(url):
     # extract only audio
     video = yt.streams.filter(only_audio=True).first()
 
-    # check for destination to save file
-    print("Enter the destination (leave blank for current directory)")
-    destination = str(input(">> ")) or '.'
+    destination = '.'
 
     # download the file
     out_file = video.download(output_path=destination)
 
     # save the file
     base, ext = os.path.splitext(out_file)
-    new_file = base + '.wav'
+    new_file = yt.title.replace(" ", "_") + '.wav'
     os.rename(out_file, new_file)
 
     # result of success
-    print(yt.title + " has been successfully downloaded.")
-
-yt2wav("https://www.youtube.com/watch?v=e-ORhEE9VVg&ab_channel=TaylorSwiftVEVO")
+    print(yt.title.replace(" ", "_") + " has been successfully downloaded.")
+    return yt.title.replace(" ", "_")
