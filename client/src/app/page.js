@@ -2,12 +2,11 @@
 import { useState, useEffect } from "react"
 import AudioList from "./audiolist"
 import Navbar from "./navbar"
-import Upload from "./upload"
+import UploadButton from "./uploadbutton"
 
 function Home() {
   
   const [audioFiles, setAudioFiles] = useState([])
-  const [uploadTrue, setUpload] = useState(false)
 
   useEffect(() => {
       fetch('http://localhost:5000/audio_stream')
@@ -22,12 +21,12 @@ function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="">
-        {uploadTrue ? <Upload appendAudio={appendAudio}/> : <button onClick={() => setUpload(true)}>Upload File</button>}
+    <main className="flex flex-col items-center h-screen">
+      <div className="flex flex-col items-center overflow-y mt-24">
+        <UploadButton appendAudio={appendAudio}/>
         <AudioList audioFiles={audioFiles}/>
       </div>
-      <Navbar/>
+        <Navbar/>
     </main>
   )
 }

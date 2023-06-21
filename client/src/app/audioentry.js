@@ -6,6 +6,7 @@ function AudioEntry({id, name}){
 
   const [load, setLoad] = useState(false)
   const [startText, setText] = useState("")
+  const [deleted, setDelete] = useState(false)
 
   function toggleDiv(){
     setLoad(!load)
@@ -18,11 +19,19 @@ function AudioEntry({id, name}){
     .catch(error => setText("API offline"))
   }, [])
 
+  function deleteAudio(){
+    fetch(`http://localhost:5000/audio_stream/${id}`, {
+      method: "DELETE"
+    })
+    setDelete(true)
+  }
+
   return(
-      <li 
+    <div className={deleted ? "hidden" : "animate-fade-in"}>
+      <div 
         className={!load ?
-          "transition-all relative flex w-96 h-10 bg-white text-black m-2 p-2 rounded break-normal" :
-          "transition-all relative flex w-96 h-96 bg-white text-black m-2 p-2 rounded break-normal" 
+          "transition-all duration-300 relative flex w-[36rem] h-10 bg-white text-black m-2 p-2 rounded break-normal" :
+          "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal" 
         }
       >
         <p 
@@ -36,8 +45,14 @@ function AudioEntry({id, name}){
         >
           {load ? <Playback id={id}/> : ""}
         </a>
-        {load ? <Transcription id={id} start={startText}/>: ""}
-      </li>
+        {load ? 
+          <div className="flex flex-col absolute top-10">
+            <Transcription id={id} start={startText}/>
+            <button onClick={deleteAudio}>Delete Audio</button>
+          </div>
+          : ""}
+      </div>
+    </div>
   )
 }
 
