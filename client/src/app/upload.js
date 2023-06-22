@@ -48,7 +48,7 @@ function Upload({appendAudio}) {
       <form onSubmit={(e) => e.preventDefault()}>
         <button 
         onClick={handleClick}
-        className=""
+        className="antialiased font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
         >
           Upload File
         </button>
@@ -56,7 +56,7 @@ function Upload({appendAudio}) {
       </form>
       <form  onSubmit={uploadYoutube}>
         <input placeholder="Youtube Link" type="url"name="url"
-        className="m-1" 
+        className="m-3 font-gothic text-center border border-black" 
         />
       </form>
     </div>

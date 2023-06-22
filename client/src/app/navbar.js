@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 
 function Navbar(){
     const [dropdownOpen, setdropdownOpen] = useState(false);
@@ -20,10 +21,10 @@ function Navbar(){
 
     return (
         <div className="flex justify-items-stretch fixed top-0 bg-white w-screen p-4 bg-opacity-50 border-b-2 border-white">
-            <h1 className="text-2xl left-0 text-black font-gothic">
+            <h1 className="text-2xl left-0 text-black font-gothic cursor-default">
                 Shunli
             </h1>
-            <h1 className="text-3xl fixed left-16 text-black font-gothic blur-[1px] opacity-50">
+            <h1 className="cursor-default text-3xl fixed left-16 text-black font-gothic blur-[1.5px] opacity-50 hover:scale-110 hover:blur-none duration-300">
                 順利
             </h1>
             <div ref={menuRef}>
@@ -37,21 +38,24 @@ function Navbar(){
                     </a>
                 </div> 
                 <div className={`${dropdownOpen ? `top-full opacity-100 visible` : 'top-[110%] invisible opacity-0'} absolute w-42 right-4 z-40 mt-2 rounded border-[.5px] border-light bg-white bg-opacity-50 py-1 shadow-card transition-all`}>
-                    <a
-                        className="block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
+                    <Link
+                        href='/account'
+                        className="cursor-pointer block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Account Details
-                    </a>
-                    <a
-                        className="block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
+                    </Link>
+                    <Link
+                        href='/settings'
+                        className="cursor-pointer block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Settings
-                    </a>
-                    <a
-                        className="block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
+                    </Link>
+                    <Link
+                        href='/'
+                        className="cursor-pointer block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Logout
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@ import Upload from "./upload"
 
 function UploadButton({appendAudio}){
 
-  const [uploadTrue, setUpload] = useState(false)
+  const [uploadTrue, setUpload] = useState(true)
 
   return (
     <div className={
@@ -13,17 +13,17 @@ function UploadButton({appendAudio}){
     }
     >
       <p
-      className="absolute left-1 top-1 text-black font-bold font-gothic"
+      className="absolute cursor-default left-1 top-1 text-black font-bold font-gothic"
       >
         Upload
       </p>
       <p
-      className="absolute left-5 top text-black text-3xl blur-[1px] opacity-50 z-0"
+      className="absolute cursor-default left-5 top text-black text-3xl blur-[1px] opacity-50 z-0 hover:scale-110 hover:blur-none duration-300"
       >
         上傳
       </p>
       <button onClick={() => setUpload(!uploadTrue)}
-      className={uploadTrue ? "transition-all delay-150 absolute top-1 left-32 text-black font-black w-4" : "transition-all absolute top-1 left-64 text-black font-black w-4"}
+      className={uploadTrue ? "transition-all delay-150 absolute top-1 left-32 text-black font-black w-4 hover:scale-150 hover:delay-0" : "transition-all absolute top-1 left-64 text-black font-black w-4 hover:scale-150 hover:delay-0"}
 			>
         {uploadTrue ? "+" : "-"}
       </button>
