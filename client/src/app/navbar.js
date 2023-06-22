@@ -20,8 +20,11 @@ function Navbar(){
 
     return (
         <div className="flex justify-items-stretch fixed top-0 bg-white w-screen p-4 bg-opacity-50 border-b-2 border-white">
-            <h1 className="text-xl justify-self-start text-black font-gothic">
-                顺利
+            <h1 className="text-2xl left-0 text-black font-gothic">
+                Shunli
+            </h1>
+            <h1 className="text-3xl fixed left-16 text-black font-gothic blur-[1px] opacity-50">
+                順利
             </h1>
             <div ref={menuRef}>
                 <div
