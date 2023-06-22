@@ -5,19 +5,12 @@ import Transcription from "./transcription"
 function AudioEntry({id, name}){
 
   const [load, setLoad] = useState(false)
-  const [startText, setText] = useState("")
   const [deleted, setDelete] = useState(false)
 
   function toggleDiv(){
     setLoad(!load)
   }
 
-  useEffect(()=> {
-    fetch(`http://localhost:5000/transcriptions/${id}`)
-    .then(res => res.json())
-    .then(data => setText(data))
-    .catch(error => setText("API offline"))
-  }, [])
 
   function deleteAudio(){
     fetch(`http://localhost:5000/audio_stream/${id}`, {
@@ -27,16 +20,16 @@ function AudioEntry({id, name}){
   }
 
   return(
-    <div className={deleted ? "hidden" : "animate-fade-in"}>
+    <div className={deleted ? "hidden" : "animate-fade-in overflow-y-scroll"}>
       <div 
         className={!load ?
           "transition-all duration-300 relative flex w-[36rem] h-10 bg-white text-black m-2 p-2 rounded break-normal" :
-          "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal overflow-y-scroll overscroll-contain" 
+          "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal overflow-y-scroll" 
         }
       >
         <p 
           onClick={toggleDiv}
-          className="truncate pr-8"
+          className="truncate pr-8 cursor-pointer"
         >
           {name}
         </p>
@@ -47,8 +40,12 @@ function AudioEntry({id, name}){
         </a>
         {load ? 
           <div className="flex flex-col absolute top-10">
-            <Transcription id={id} start={startText}/>
-            <button onClick={deleteAudio}>Delete Audio</button>
+            <Transcription id={id}/>
+            <button onClick={deleteAudio}
+            className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 hover:bg-red-500 hover:scale-105 hover:duration-150"
+            >
+              Delete Audio
+            </button>
           </div>
           : ""}
       </div>

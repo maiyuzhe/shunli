@@ -43,3 +43,6 @@ next-env.d.ts
 *.flac
 *.mp3
 *.wav
+
+/client/.env
+/client/google_secret.json

@@ -13,7 +13,6 @@ def yt2wav(url):
     out_file = video.download(output_path=destination)
 
     # save the file
-    base, ext = os.path.splitext(out_file)
     new_file = yt.title.replace(" ", "_") + '.wav'
     os.rename(out_file, new_file)
 

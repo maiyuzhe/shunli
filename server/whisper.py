@@ -58,4 +58,7 @@ def speech_to_text(url):
 
     return transcribed_text
 
+def test():
+    return "test"
+
 

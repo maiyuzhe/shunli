@@ -4,10 +4,9 @@ from sqlalchemy.orm import validates
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_cors import CORS
-from whisper import speech_to_text
+from whisper import speech_to_text, test
 import validators
 from yt2wav import yt2wav
-# from models import Upload, Transcription
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
@@ -109,6 +108,18 @@ class TransciptionById(Resource):
 			return(transcription.transcription)
 		except:
 			return {"error": "Transcription does not exist"}, 404
+	def patch(self, id):
+		try:
+			transcription = Transcription.query.filter_by(id=id).first()
+			print(transcription)
+			transcript = speech_to_text(f'http://localhost:5000/audio_stream/{id}')
+			transcription.transcription = transcript
+			print(transcription)
+			db.session.add(transcription)
+			db.session.commit()
+			return {"transcription": transcript}, 201
+		except:
+			return {"error": "transcription error"}, 400
 api.add_resource(TransciptionById, '/transcriptions/<int:id>')
 
 class Transcriptions(Resource):
@@ -117,8 +128,9 @@ class Transcriptions(Resource):
 		print(request.headers)
 		print(request.json)
 		audio = request.json['audio_id']
-		transcription = speech_to_text(f'http://localhost:5000/audio_stream/{audio}')
-		audio_name = f'{audio}.mp3'
+		filename = request.json['filename']
+		transcription = "Press Transcribe!"
+		audio_name = filename
 		new_transcription = Transcription(
 			filename = audio_name,
 			transcription = transcription

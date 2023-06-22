@@ -21,7 +21,19 @@ function Upload({appendAudio}) {
         body: formData
       })
       .then(res=> res.json())
-      .then(data => appendAudio(data))
+      .then(data => {
+        appendAudio(data)
+        fetch('http://localhost:5000/transcriptions', {
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({
+            audio_id: data.id,
+            filename: data.filename
+          })
+        })
+      })
       .catch(error => console.log(error))
 
     }
@@ -48,7 +60,7 @@ function Upload({appendAudio}) {
       <form onSubmit={(e) => e.preventDefault()}>
         <button 
         onClick={handleClick}
-        className="antialiased font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
+        className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
         >
           Upload File
         </button>
