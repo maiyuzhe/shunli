@@ -31,12 +31,12 @@ function AudioEntry({id, name}){
       <div 
         className={!load ?
           "transition-all duration-300 relative flex w-[36rem] h-10 bg-white text-black m-2 p-2 rounded break-normal" :
-          "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal" 
+          "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal overflow-y-scroll overscroll-contain" 
         }
       >
         <p 
           onClick={toggleDiv}
-          className="absolute left-1"
+          className="truncate pr-8"
         >
           {name}
         </p>

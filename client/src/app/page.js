@@ -22,8 +22,10 @@ function Home() {
 
   return (
     <main className="flex flex-col items-center h-screen">
-      <div className="flex flex-col items-center overflow-y mt-24">
+      <div className="mt-24">
         <UploadButton appendAudio={appendAudio}/>
+      </div>
+      <div className="flex flex-col items-center overflow-y-scroll mt-12">
         <AudioList audioFiles={audioFiles}/>
       </div>
         <Navbar/>
