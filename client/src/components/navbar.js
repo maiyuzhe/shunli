@@ -1,10 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 function Navbar(){
     const [dropdownOpen, setdropdownOpen] = useState(false);
 
     let menuRef = useRef()
+
+    const { user } = useUser()
 
     useEffect(() => {
         function handler(e) {
@@ -29,7 +32,11 @@ function Navbar(){
             </h1>
             <div ref={menuRef}>
                 <div
-                    onClick={() => setdropdownOpen(!dropdownOpen)}
+                    onClick={() => {
+                        if(user){
+                            setdropdownOpen(!dropdownOpen)
+                        }
+                    }}
                     className="transition-all duration-300 absolute right-4 bg-black overflow-hidden w-8 h-8 flex justify-center items-center rounded
                     hover:cursor-pointer hover:bg-white hover:text-black
                     ">
@@ -50,12 +57,12 @@ function Navbar(){
                     >
                         Settings
                     </Link>
-                    <Link
-                        href='/'
+                    {user ? <a
+                        href='/api/auth/logout'
                         className="cursor-pointer block py-2 px-5 text-base font-gothic text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
                     >
                         Logout
-                    </Link>
+                    </a> : ""}
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
-"use client"
-import Navbar from "@/app/navbar"
-import "../app/globals.css"
+import Navbar from "../components/navbar"
+
 function Account(){
 	return (
 		<main
