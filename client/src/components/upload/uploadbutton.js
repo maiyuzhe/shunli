@@ -27,7 +27,7 @@ function UploadButton({appendAudio}){
 			>
         {uploadTrue ? "+" : "-"}
       </button>
-      <div className={uploadTrue ? "transition-all invisible absolute top-1": "transition-all delay-150 visible absolute top-8"}>
+      <div className={uploadTrue ? "transition-all invisible absolute top-1": "animate-fade-down animate-once animate-duration-500 visible absolute top-8"}>
         <Upload appendAudio={appendAudio}/>
       </div>
     </div>

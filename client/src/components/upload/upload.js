@@ -1,6 +1,9 @@
 import { useRef } from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 function Upload({appendAudio}) {
+
+  const {user} = useUser()
 
   const hiddenFileInput = useRef(null);
   
@@ -13,9 +16,8 @@ function Upload({appendAudio}) {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
       const formData = new FormData()
-      console.log(file.type, file.size)
       formData.append('file', file)
-      console.log(formData)
+      formData.append('email', user.email)
       fetch('http://localhost:5000/audio_stream', {
         method: "POST",
         body: formData
@@ -46,7 +48,7 @@ function Upload({appendAudio}) {
       headers: {
         "Content-type": "application/json"
       },
-      body: JSON.stringify({url: e.target.url.value, type: "url"})
+      body: JSON.stringify({url: e.target.url.value, type: "url", email: user.email})
     })
     .then(res => res.json())
     .then(data => appendAudio(data))

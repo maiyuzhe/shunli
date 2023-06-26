@@ -21,6 +21,7 @@ class Upload(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	filename = db.Column(db.String(50))
 	data = db.Column(db.LargeBinary)
+	email = db.Column(db.String(50))
 	@validates("filename")
 	def validates_filename(self, key, filename):
 		if filename not in Upload.query.all():
@@ -48,36 +49,43 @@ class UploadFile(Resource):
 		try:
 			new_file = ""
 			if request.is_json:
+				print(request.json['email'])
 				audio_name = yt2wav(request.json['url'])
+				print(audio_name)
 				new_file = open(f"./{audio_name}.wav", "rb")
 				print(new_file)
 				upload = Upload(
 					filename = audio_name,
-					data = new_file.read()
+					data = new_file.read(),
+					email = request.json['email']
 				)
 				db.session.add(upload)
 				db.session.commit()
 				return {
 					"filename": upload.filename,
-					"id": upload.id
+					"id": upload.id,
+					"email": upload.email
 					}, 201
 			else:
+				email = request.form.get('email')
 				new_file = request.files['file']
 				upload = Upload(
 					filename = new_file.filename,
-					data = new_file.read()
+					data = new_file.read(),
+					email = email
 				)
 				db.session.add(upload)
 				db.session.commit()
 				return {
 					"filename": upload.filename,
-					"id": upload.id
+					"id": upload.id,
+					"email": upload.email
 					}, 201
 		except:
 			return {"error": "File already exists in database"}, 400
 	def get(self):
 		try:
-			audio_files = [{"id": upload.id, "filename": upload.filename} for upload in Upload.query.all()]
+			audio_files = [{"id": upload.id, "filename": upload.filename, "email": upload.email} for upload in Upload.query.all()]
 			return make_response(audio_files, 200)
 		except:
 			return {"error": "Database empty"}, 400
@@ -124,10 +132,6 @@ api.add_resource(TransciptionById, '/transcriptions/<int:id>')
 
 class Transcriptions(Resource):
 	def post(self):
-		print(request.is_json)
-		print(request.headers)
-		print(request.json)
-		audio = request.json['audio_id']
 		filename = request.json['filename']
 		transcription = "Press Transcribe!"
 		audio_name = filename

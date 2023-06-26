@@ -8,8 +8,10 @@ function Home() {
 
   const { user } = useUser();
 
-  
-  const [audioFiles, setAudioFiles] = useState([])
+  const [audioFiles, setAudioFiles] = useState([{
+    id: 1,
+    filename: "file",
+  }])
   
   useEffect(() => {
       fetch('http://localhost:5000/audio_stream')
@@ -19,7 +21,6 @@ function Home() {
   },[])
 
   function appendAudio(data){
-    console.log(data)
     setAudioFiles([...audioFiles, data])
   }
 
@@ -27,12 +28,12 @@ function Home() {
     <main className="flex flex-col items-center h-screen">
       {user ? 
       <div 
-      className="flex flex-col mt-24 w-screen items-center"
+      className="flex flex-col mt-24 w-screen items-center overflow-y-scroll"
       >
         <div>
           <UploadButton appendAudio={appendAudio}/>
         </div>
-        <div className="flex flex-col items-center overflow-y-scroll mt-12">
+        <div className="flex flex-col items-center mt-6 ml-2">
           <AudioList audioFiles={audioFiles}/>
         </div>
       </div> 
@@ -56,7 +57,7 @@ function Home() {
         </a>
       </div>
       }
-        <Navbar/>
+      <Navbar user={user}/>
     </main>
   )
 }

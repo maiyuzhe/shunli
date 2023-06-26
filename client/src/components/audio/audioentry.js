@@ -23,29 +23,35 @@ function AudioEntry({id, name}){
     <div className={deleted ? "hidden" : "animate-fade-in overflow-y-scroll"}>
       <div 
         className={!load ?
-          "transition-all duration-300 relative flex w-[36rem] h-10 bg-white text-black m-2 p-2 rounded break-normal" :
+          "transition-all duration-300 relative flex w-72 h-9 bg-white text-black m-2 p-2 rounded break-normal hover:scale-105" :
           "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal overflow-y-scroll" 
         }
       >
         <p 
           onClick={toggleDiv}
-          className="truncate pr-8 cursor-pointer"
+          className="truncate pr-8 cursor-pointer font-bold"
         >
-          {name}
+          {load ? "-" : "+"} {name}
         </p>
         <a
           className="absolute right-1"
         >
-          {load ? <Playback id={id}/> : ""}
+          {load ? 
+            <div>
+              <button onClick={deleteAudio}
+              className="antialiased animate-fade absolute right-10 w-32 transition ease-in-out font-gothic border-black border rounded-md hover:bg-red-500 hover:scale-105 hover:duration-150"
+              >
+                Delete Audio
+              </button>
+              <Playback id={id}/> 
+            </div>
+          : 
+          ""
+          }
         </a>
         {load ? 
-          <div className="flex flex-col absolute top-10">
+          <div className="flex flex-col absolute animate-fade">
             <Transcription id={id}/>
-            <button onClick={deleteAudio}
-            className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 hover:bg-red-500 hover:scale-105 hover:duration-150"
-            >
-              Delete Audio
-            </button>
           </div>
           : ""}
       </div>

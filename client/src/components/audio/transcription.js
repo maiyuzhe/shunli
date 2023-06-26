@@ -14,7 +14,6 @@ function Transcription({audioRef, id}){
 
     function transcribe(){
         setLoad(false)
-        setText("Did you know that patience is a virtue?")
         fetch(`http://localhost:5000/transcriptions/${id}`, {
           method: "PATCH",
           headers: {
@@ -32,20 +31,18 @@ function Transcription({audioRef, id}){
         .catch(error => console.log(error))
     }
 
-
-
     return (
         <div className={"absolute top-10"}>
         <p
-          className="w-[33rem] py-1"
+          className={loading ? "w-[33rem] py-1 animate-fade-down h-full" : "hidden"}
         >
           {text}
         </p>
-        <div className="flex">
+        <div className="flex justify-center items-center w-[33rem]">
           {!loading? <Loader/> : <button onClick={transcribe}
           className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"
           >
-            TRANSCRIBE
+            {text!="Press Transcribe!" ? "RESUBMIT TRANSCRIPTION": "TRANSCRIBE"}
           </button>}
         </div>
       </div>
