@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Loader from "./loader"
+import TranscriptWord from "./transcriptword"
 
 function Transcription({audioRef, id}){
 
@@ -33,11 +34,13 @@ function Transcription({audioRef, id}){
 
     return (
         <div className={"absolute top-10"}>
-        <p
-          className={loading ? "w-[33rem] py-1 animate-fade-down h-full" : "hidden"}
+        <div
+          className={loading ? "w-[33rem] py-1 pl-2 animate-fade-down h-full flex flex-wrap text-lg" : "hidden"}
         >
-          {text}
-        </p>
+          {text.split("").map((word, index) => {
+            return <TranscriptWord word={word} key={index} index={index}/>
+          })}
+        </div>
         <div className="flex justify-center items-center w-[33rem]">
           {!loading? <Loader/> : <button onClick={transcribe}
           className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"

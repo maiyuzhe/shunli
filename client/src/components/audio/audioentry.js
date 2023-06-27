@@ -16,6 +16,9 @@ function AudioEntry({id, name}){
     fetch(`http://localhost:5000/audio_stream/${id}`, {
       method: "DELETE"
     })
+    fetch(`http://localhost:5000/transcriptions/${id}`, {
+      method: "DELETE"
+    })
     setDelete(true)
   }
 
@@ -23,8 +26,8 @@ function AudioEntry({id, name}){
     <div className={deleted ? "hidden" : "animate-fade-in overflow-y-scroll"}>
       <div 
         className={!load ?
-          "transition-all duration-300 relative flex w-72 h-9 bg-white text-black m-2 p-2 rounded break-normal hover:scale-105" :
-          "transition-all duration-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal overflow-y-scroll" 
+          "transition-all duration-300 relative flex w-80 h-9 bg-white text-black m-2 p-2 rounded break-normal hover:scale-105" :
+          "transition-all duration-300 delay-300 relative flex w-[36rem] h-96 bg-white text-black m-2 p-2 rounded break-normal overflow-y-scroll" 
         }
       >
         <p 
