@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Record from "./record";
 
 function Upload({appendAudio}) {
 
@@ -70,9 +71,10 @@ function Upload({appendAudio}) {
       </form>
       <form  onSubmit={uploadYoutube}>
         <input placeholder="Youtube Link" type="url"name="url"
-        className="m-3 font-gothic text-center border border-black" 
+        className="m-3 font-gothic text-center border border-black hidden" 
         />
       </form>
+      <Record/>
     </div>
   );
 };
