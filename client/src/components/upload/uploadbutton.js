@@ -7,9 +7,9 @@ function UploadButton({appendAudio}){
 
   return (
     <div className={
-      uploadTrue ? "transition-all delay-150 flex justify-center relative w-72 bg-white h-9 rounded m-2"
+      uploadTrue ? "transition-all delay-150 flex justify-center relative w-80 bg-white h-9 rounded m-2"
       :
-      "transition-all flex justify-center relative w-72 h-28 bg-white rounded"
+      "transition-all flex justify-center relative w-80 h-48 bg-white rounded"
     }
     >
       <p
@@ -23,7 +23,7 @@ function UploadButton({appendAudio}){
         上傳
       </p>
       <button onClick={() => setUpload(!uploadTrue)}
-      className={uploadTrue ? "transition-all delay-150 absolute top-1 left-32 text-black font-black w-4 hover:scale-150 hover:delay-0" : "transition-all absolute top-1 left-64 text-black font-black w-4 hover:scale-150 hover:delay-0"}
+      className={uploadTrue ? "transition-all delay-150 absolute top-1 left-36 text-black font-black w-4 hover:scale-150 hover:delay-0" : "transition-all absolute top-1 left-72 text-black font-black w-4 hover:scale-150 hover:delay-0"}
 			>
         {uploadTrue ? "+" : "-"}
       </button>

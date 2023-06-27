@@ -1,8 +1,9 @@
 import { useState, useRef } from "react"
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-function Record(){
+function Record({appendAudio}){
 
-  //https://blog.logrocket.com/how-to-create-video-audio-recorder-react/
+  const {user} = useUser()
 
   const mimeType = "audio/x-wav"
 
@@ -59,31 +60,97 @@ function Record(){
     }
   }
 
+  function handleUpload(){
+    const formData = new FormData()
+    const dateInfo = Date().toString().split(" ")
+    const fileName = (`${dateInfo[1]}-${dateInfo[2]}-${dateInfo[3]}-${dateInfo[4].replaceAll(":", "-")}`)
+    const newFile = new File([audioChunks], `${fileName}.mp3`);
+    formData.append("file", newFile)
+    formData.append('email', user.email)
+    formData.append('type', 'recording')
+    fetch('http://localhost:5000/audio_stream', {
+        method: "POST",
+        body: formData
+      })
+      .then(res=> res.json())
+      .then(data => {
+        appendAudio(data)
+        fetch('http://localhost:5000/transcriptions', {
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({
+            audio_id: data.id,
+            filename: data.filename
+          })
+        })
+      })
+      .catch(error => console.log(error))
+  }
+
   return (
     <div
     className="flex flex-col items-center"
     >
       <button
         onClick={getAudioPermission}
-        className={permission ? "hidden": "mt-2 px-2 font-gothic text-black border border-black rounded-md"}
-      >
+          className={permission ? "hidden"
+          :
+          "antialiased m-2 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
+          }
+        >
         Get Permission
       </button>
-      <button
-        className={!permission ? "hidden": "mt-2 px-2 font-gothic text-black border border-black rounded-md"}
-        onClick={() => {
-          if (recordingStatus == true){
-            stopRecording()
-          }
-          else{
-            startRecording()
-          }
-        }}
+      <div
+        className="flex flex-row"
       >
-        {!recordingStatus ? "Record" : "Stop Recording"}
-      </button>
+        <div
+          className="relative"
+        >
+          <button
+            className={!permission ? "hidden": 
+            "antialiased mx-1 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
+            }
+            onClick={() => {
+              if (recordingStatus === true){
+                stopRecording()
+              }
+              else{
+                startRecording()
+              }
+            }}
+          >
+            {!recordingStatus ? "Record" : "Stop Recording"}
+          </button>
+          <div
+            className={recordingStatus ? 
+              "absolute right-0 top-0 animate-ping animate-duration-[1500ms] animate-ease-out bg-red-500 rounded-full w-3 h-3 border border-black"
+              :
+              "hidden"
+            }
+          >
+          </div>
+        </div>
+        <button
+          className={audio ?
+            "antialiased mx-1 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
+            :
+            "hidden"
+          }
+          onClick={handleUpload}
+        >
+          Upload Recording
+        </button>
+      </div>
       <br/>
-      <audio src={audio} controls></audio>
+      <div className={audio ? 
+        "absolute animate-fade-down animate-once top-16 mt-4 border border-black rounded-full w-76"
+        :
+        "hidden"  
+      }>
+        <audio src={audio} controls controlsList="timeline play nodownload foobar"></audio>
+      </div>
     </div>
   )
 }

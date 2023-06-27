@@ -1,10 +1,12 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Record from "./record";
 
 function Upload({appendAudio}) {
 
   const {user} = useUser()
+
+  const [record, setRecord] = useState(false)
 
   const hiddenFileInput = useRef(null);
   
@@ -58,23 +60,43 @@ function Upload({appendAudio}) {
   
   return (
     <div
-    className="flex flex-col items-center m-1 text-black"
+    className="flex flex-col items-center m-1 text-black justify-center"
     >
-      <form onSubmit={(e) => e.preventDefault()}>
+      <div
+        className="flex flex-row justify-center"
+      >
+        <form onSubmit={(e) => e.preventDefault()}>
+          <button 
+          onClick={handleClick}
+          className={
+            !record ?
+            "antialiased m-2 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
+            :
+            "hidden"
+          }
+          >
+            Upload File
+          </button>
+          <input className="hidden" type="file" ref={hiddenFileInput} onChange={handleChange}/>
+        </form>
+        <form  onSubmit={uploadYoutube}>
+          <input placeholder="Youtube Link" type="url"name="url"
+          className="m-3 font-gothic text-center border border-black hidden" 
+          />
+        </form>
         <button 
-        onClick={handleClick}
-        className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
+          onClick={() => setRecord(!record)}
+          className="antialiased m-2 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
         >
-          Upload File
+          {!record ? "Submit Recording": "Upload Audio"}
         </button>
-        <input className="hidden" type="file" ref={hiddenFileInput} onChange={handleChange}/>
-      </form>
-      <form  onSubmit={uploadYoutube}>
-        <input placeholder="Youtube Link" type="url"name="url"
-        className="m-3 font-gothic text-center border border-black hidden" 
-        />
-      </form>
-      <Record/>
+      </div>
+      <div
+        className={!record ? "hidden" : ""}
+      >
+        <Record appendAudio={appendAudio}/>
+      </div>
+      
     </div>
   );
 };
