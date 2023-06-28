@@ -11,7 +11,7 @@ function AudioList({audioFiles}){
     return (
         <div className="flex flex-col items-center w-[45rem] overflow-y-scroll">
             {audioFiles ? filteredAudio.map((audioFile) => {
-                return <AudioEntry id = {audioFile.id} key ={audioFile.id} name={audioFile.filename}/>
+                return <AudioEntry id = {audioFile.id} key ={audioFile.name} name={audioFile.filename}/>
             }) : <p>upload files</p>}
         </div>
     )

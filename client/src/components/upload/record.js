@@ -35,6 +35,7 @@ function Record({appendAudio}){
 
   async function startRecording(){
     setRecordingStatus(true)
+    setAudioChunks([])
     const media = new MediaRecorder(stream, {type: mimeType})
     mediaRecorder.current = media
     mediaRecorder.current.start()
@@ -55,7 +56,6 @@ function Record({appendAudio}){
       const audioUrl = URL.createObjectURL(audioBlob)
       setAudio(audioUrl)
       console.log(audioUrl)
-      setAudioChunks([])
       console.log(audioChunks)
     }
   }
@@ -64,10 +64,10 @@ function Record({appendAudio}){
     const formData = new FormData()
     const dateInfo = Date().toString().split(" ")
     const fileName = (`${dateInfo[1]}-${dateInfo[2]}-${dateInfo[3]}-${dateInfo[4].replaceAll(":", "-")}`)
-    const newFile = new File([audioChunks], `${fileName}.mp3`);
+    const audioBlob = new Blob(audioChunks, {type: mimeType})
+    const newFile = new File([audioBlob], `${fileName}.webm`);
     formData.append("file", newFile)
     formData.append('email', user.email)
-    formData.append('type', 'recording')
     fetch('http://localhost:5000/audio_stream', {
         method: "POST",
         body: formData

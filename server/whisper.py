@@ -17,28 +17,32 @@ def query(filename):
     return response.json()
 
 def clean_up(file_name):
-    if f'{file_name}.mp3' in os.listdir():
-        os.remove(f'{file_name}.mp3')
-    if f'{file_name}.wav' in os.listdir():
-        os.remove(f'{file_name}.wav')
-    shutil.rmtree(file_name)
+    if file_name in os.listdir():
+        os.remove(file_name)
+    shutil.rmtree(file_name.split(".")[0])
 
 
-def speech_to_text(url):
+def speech_to_text(url, file_name):
+    folder_name = file_name.split(".")[0]
     file_data = requests.get(url)
-    file_name = url.split('/')[4]
-    with open(f'{file_name}.mp3', 'wb') as f:
+    with open(file_name, 'wb') as f:
         f.write(file_data.content)
 
-    if file_name not in os.listdir():
-        convert_file(f'{file_name}.mp3')
+    print(f"{file_name} downloaded")
+
+    if folder_name not in os.listdir():
+        print(f"creating folder: '{folder_name}'")
+        convert_file(file_name)
     else:
-        os.remove(f'{file_name}.mp3')
+        os.remove(file_name)
+    print("conversion completed")
 
     full_text = []
 
-    for flac_audio in natsorted(os.listdir(f'./{file_name}')):
-        output = query(f"./{file_name}/{flac_audio}")
+    
+
+    for flac_audio in natsorted(os.listdir(f'./{folder_name}')):
+        output = query(f"./{folder_name}/{flac_audio}")
         if "text" not in output:
             print(output)        
             print("API unavailable")

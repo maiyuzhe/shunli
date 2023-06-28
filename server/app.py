@@ -119,8 +119,7 @@ class TransciptionById(Resource):
 	def patch(self, id):
 		try:
 			transcription = Transcription.query.filter_by(id=id).first()
-			print(transcription)
-			transcript = speech_to_text(f'http://localhost:5000/audio_stream/{id}')
+			transcript = speech_to_text(f'http://localhost:5000/audio_stream/{id}', transcription.filename)
 			transcription.transcription = transcript
 			print(transcription)
 			db.session.add(transcription)
@@ -128,6 +127,14 @@ class TransciptionById(Resource):
 			return {"transcription": transcript}, 201
 		except:
 			return {"error": "transcription error"}, 400
+	def delete(self, id):
+		try:
+			transcription = Transcription.query.filter_by(id=id).first()
+			db.session.delete(transcription)
+			db.session.commit()
+			return {"success": "deleted"}, 204
+		except:
+			return {"error": "404 not found"}, 404
 api.add_resource(TransciptionById, '/transcriptions/<int:id>')
 
 class Transcriptions(Resource):
