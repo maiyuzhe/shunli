@@ -22,6 +22,7 @@ function Transcription({audioRef, id}){
       fetch(`http://localhost:5000/transcriptions/${id}`)
       .then(res => res.json())
       .then(data => setText(data))
+      .catch(error => console.log(error))
     },[])
 
     function transcribe(){

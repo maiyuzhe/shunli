@@ -183,6 +183,13 @@
             "index": "pypi",
             "version": "==3.0.5"
         },
+        "fleep": {
+            "hashes": [
+                "sha256:c8f62b258ee5364d7f6c1ed1f3f278e99020fc3f0a60a24ad1e10846e31d104c"
+            ],
+            "index": "pypi",
+            "version": "==1.0.1"
+        },
         "greenlet": {
             "hashes": [
                 "sha256:03a8f4f3430c3b3ff8d10a2a86028c660355ab637cee9333d63d66b56f09d52a",

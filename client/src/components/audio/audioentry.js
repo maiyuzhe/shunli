@@ -34,7 +34,7 @@ function AudioEntry({id, name}){
           onClick={toggleDiv}
           className="truncate pr-8 cursor-pointer font-bold"
         >
-          {load ? "-" : "+"} {name}
+          {load ? "-" : "+"} {name.split(".")[0]}
         </p>
         <a
           className="absolute right-1"

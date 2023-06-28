@@ -16,6 +16,7 @@ pytube = "*"
 validators = "*"
 werkzeug = "*"
 bs4 = "*"
+fleep = "*"
 
 [dev-packages]
 natsort = "*"
