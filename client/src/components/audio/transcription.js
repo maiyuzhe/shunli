@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react"
 import Loader from "./loader"
 import TranscriptWord from "./transcriptword"
+import DefinitionPopUp from "./definition"
 
 function Transcription({audioRef, id}){
 
     const [text, setText] = useState("")
     const [loading, setLoad] = useState(true)
+    const [defArray, setArray] = useState([])
+
+    function updateArray(word){
+      setArray([...defArray, word])
+    }
+
+    function filterArray(word){
+      const newArray = defArray.filter(w => w !== word)
+      setArray(newArray)
+    }
 
     useEffect(() => {
       fetch(`http://localhost:5000/transcriptions/${id}`)
@@ -34,12 +45,12 @@ function Transcription({audioRef, id}){
     }
 
     return (
-        <div className={"absolute top-10"}>
+      <div className={"absolute top-10"}>
         <div
           className={loading ? "w-[33rem] py-1 pl-2 animate-fade-down h-full flex flex-wrap text-lg" : "hidden"}
         >
           {text.split("").map((word, index) => {
-            return <TranscriptWord word={word} key={index} index={index}/>
+            return <TranscriptWord word={word} key={index} index={index} defArray={defArray} updateArray={updateArray} filterArray={filterArray}/>
           })}
         </div>
         <div className="flex justify-center items-center w-[33rem]">
@@ -49,6 +60,7 @@ function Transcription({audioRef, id}){
             {text!="Press Transcribe!" ? "RESUBMIT TRANSCRIPTION": "TRANSCRIBE"}
           </button>}
         </div>
+        <DefinitionPopUp word={defArray}/>
       </div>
     )
 }

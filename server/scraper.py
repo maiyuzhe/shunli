@@ -1,14 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-def fun1(url):
-    page = requests.get(url)
+def scrape(term):
+    page = requests.get(f"https://www.zdic.net/hans/{term}")
 
     soup = BeautifulSoup(page.content, "html.parser")
 
-    result = soup.find_all("div", class_="highlight html")
+    result = soup.find_all("div", {"class": "jnr"})
 
-    #https://realpython.com/beautiful-soup-web-scraper-python/
 
     # for job_element in job_elements:
     #     print(job_element, end="\n"*2)
@@ -20,8 +19,9 @@ def fun1(url):
     #     print(company_element)
     #     print(location_element)
     #     print()
+    for r in result:
+        print(r.prettify())
+    return [r.prettify() for r in result]
 
-    print(result)
-    return 0
+scrape("良好")
 
-fun1("https://realpython.com/beautiful-soup-web-scraper-python/")

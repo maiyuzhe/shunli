@@ -9,4 +9,5 @@ requests
 pytube
 validators
 werkzeug
+bs4
 fleep
