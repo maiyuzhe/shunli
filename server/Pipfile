@@ -15,6 +15,7 @@ requests = "*"
 pytube = "*"
 validators = "*"
 werkzeug = "*"
+bs4 = "*"
 
 [dev-packages]
 natsort = "*"

@@ -7,6 +7,7 @@ from flask_cors import CORS
 from whisper import speech_to_text, test
 import validators
 from yt2wav import yt2wav
+from scraper import scrape
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
@@ -147,3 +148,12 @@ class Transcriptions(Resource):
 			"transcription": new_transcription.transcription
 		}, 201
 api.add_resource(Transcriptions, '/transcriptions') 
+
+class Definition(Resource):
+	def get(self, word):
+		try:
+			definition = scrape(word)
+			return {"definition": definition}, 201
+		except:
+			return {"definition": "invalid word"}, 404
+api.add_resource(Definition, "/definitions/<string:word>")
