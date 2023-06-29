@@ -1,23 +1,34 @@
+import ReactHTMLParser from "html-react-parser"
+import { useState } from "react"
+
 function Term({vocab}){
+
+  const [deleted, setDelete] = useState(false)
+
+  function removeEntry(){
+    fetch(`http://localhost:5000/vocabulary/${vocab.id}`, {
+      method: "DELETE"
+    })
+    .then(res=> {
+      setDelete(true)
+    })
+  }
+
   return (
     <div
-      className="transition ease-in-out flex flex-row m-2 px-2 py-1 border-b-2 border-black hover:scale-105"
+      className={
+        !deleted ? "transition ease-in-out items-center flex flex-row m-2 px-2 py-1 border-b-2 border-black hover:scale-105"
+        :
+        "hidden"
+      }
     >
-      <p
-        className="mx-1"
+      <button
+        onClick={removeEntry}
+        className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"
       >
-        {vocab.word}
-      </p>
-      <p
-        className="mx-1"  
-      >
-        -
-      </p>
-      <p
-        className="mx-1"
-      >
-        {vocab.definition}
-      </p>
+        DELETE ENTRY
+      </button>
+        {ReactHTMLParser(vocab.definition)}
     </div>
   )
 }

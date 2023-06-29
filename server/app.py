@@ -17,6 +17,13 @@ db = SQLAlchemy(app)
 CORS(app)
 api = Api(app)
 
+class Vocabulary(db.Model):
+	__tablename__ = 'vocabulary'
+	id = db.Column(db.Integer, primary_key=True)
+	term = db.Column(db.String(50))
+	definition = db.Column(db.String(50))
+	translation = db.Column(db.String(50))
+
 class Upload(db.Model):
 	__tablename__ = "uploads"
 	id = db.Column(db.Integer, primary_key=True)
@@ -164,3 +171,51 @@ class Definition(Resource):
 		except:
 			return {"error": "invalid word"}, 404
 api.add_resource(Definition, "/definitions/<string:word>")
+
+class VocabularyList(Resource):
+	def post(self):
+		try:
+			fields=request.get_json()
+			new_vocab = Vocabulary(
+				term = fields['term'],
+				definition = fields['definition'],
+				translation = fields['translation']
+			)
+			print("values assigned")
+			db.session.add(new_vocab)
+			db.session.commit()
+			return {"success": "nice"}, 200
+		except:
+			return {"error": "invalid post"}, 400
+	def get(self):
+		try:
+			vocabulary_list = [{"id": vocab.id, "term": vocab.term, "definition": vocab.definition, "translation": vocab.translation} for vocab in Vocabulary.query.all()]
+			return {"vocabulary": vocabulary_list}, 200
+		except:
+			return {"error": "failed to fetch"}, 404
+api.add_resource(VocabularyList, '/vocabulary')
+
+class VocabularyById(Resource):
+	def patch(self, id):
+		try:
+			vocab = Vocabulary.query.filter_by(id=id).first()
+			fields = request.get_json()
+			for field in fields:
+				setattr(vocab, field, fields['field'])
+			db.session.add(vocab)
+			db.session.commit()
+			return {"term": vocab.term,
+				"definition": vocab.definition,
+				"translation": vocab.translation	
+			}, 201
+		except:
+			return {"error": "wrong"}, 400
+	def delete(self, id):
+		try:
+			vocab = Vocabulary.query.filter_by(id=id).first()
+			db.session.delete(vocab)
+			db.session.commit()
+			return {"success": "item deleted"}, 204
+		except:
+			return {"error": "resource not found"}, 404
+api.add_resource(VocabularyById, '/vocabulary/<int:id>')

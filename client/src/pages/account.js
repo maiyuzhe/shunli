@@ -16,14 +16,14 @@ function Account(){
 				<img 
 					className="rounded-full w-48 mt-4 border border-black border-2"
 					alt="profile-pic" 
-					src={user.picture}
+					src={user ? user.picture : ""}
 				/>
 				<h1
 				  className="mt-4"
 				>
-					{user.name}
+					{user ? user.name :""}
 					<br/>
-					{user.email}
+					{user ? user.email : ""}
 					<br/>
 					Uploads:
 				</h1>
