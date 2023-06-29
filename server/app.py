@@ -162,5 +162,5 @@ class Definition(Resource):
 			definition = scrape(word)
 			return {"definition": definition}, 201
 		except:
-			return {"definition": "invalid word"}, 404
+			return {"error": "invalid word"}, 404
 api.add_resource(Definition, "/definitions/<string:word>")

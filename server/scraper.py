@@ -21,7 +21,10 @@ def scrape(term):
     #     print()
     for r in result:
         print(r.prettify())
-    return [r.prettify() for r in result]
-
-scrape("良好")
+    if result:
+        print("success")
+        return [r.prettify() for r in result]
+    else:
+        print("invalid word")
+        return "<p>Invalid Word!</p>"
 
