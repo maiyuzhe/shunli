@@ -11,6 +11,7 @@ function DefinitionPopUp({word}){
   console.log(word)
 
   function grabDefinition(){
+    setVocab(false)
     setLoad(true)
     fetch(`http://localhost:5000/definitions/${word.join("")}`)
     .then(res => res.json())

@@ -17,14 +17,14 @@ function Term({vocab}){
   return (
     <div
       className={
-        !deleted ? "transition ease-in-out items-center flex flex-row m-2 px-2 py-1 border-b-2 border-black hover:scale-105"
+        !deleted ? "relative transition ease-in-out items-center flex flex-col m-2 px-2 py-1 border-b-2 border-black"
         :
         "hidden"
       }
     >
       <button
         onClick={removeEntry}
-        className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"
+        className="absolute left-48 w-36 antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 mb-2 hover:scale-105 hover:bg-red-500 hover:duration-150"
       >
         DELETE ENTRY
       </button>
