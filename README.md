@@ -1,4 +1,7 @@
-Shunli is a work in progress
+## Shunli
+
+![shunli_final](https://github.com/maiyuzhe/shunli/assets/100047986/cca27a9e-6b6c-4a58-8c58-85821e733e9a)
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
