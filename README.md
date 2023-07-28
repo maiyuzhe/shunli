@@ -1,6 +1,6 @@
 ## Shunli
 
-Shunli is a learning aid tool that is able to turn speech into text.  It can take Chinese audio recordings, and turn it into a transcript of which a student can study and analyze unfamiliar words.  You can submit recordings from the browser with one's microphone, upload an audio file from one's computer, or even submit a youtube video link.
+Shunli is an OpenAI Whisper based learning aid that is able to turn speech into text.  It can take Chinese audio recordings, and turn it into a transcript of which a student can study and analyze unfamiliar words.  You can submit recordings from the browser with one's microphone, upload an audio file from one's computer, or even submit a youtube video link.
 
 ![shunli_final](https://github.com/maiyuzhe/shunli/assets/100047986/cca27a9e-6b6c-4a58-8c58-85821e733e9a)
 
