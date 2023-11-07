@@ -5,7 +5,7 @@ import DefinitionPopUp from "./definition"
 
 function Transcription({audioRef, id}){
 
-    const [text, setText] = useState("")
+    const [text, setText] = useState("Temp")
     const [loading, setLoad] = useState(true)
     const [defArray, setArray] = useState([])
 
@@ -21,7 +21,11 @@ function Transcription({audioRef, id}){
     useEffect(() => {
       fetch(`http://localhost:5000/transcriptions/${id}`)
       .then(res => res.json())
-      .then(data => setText(data))
+      .then(data => {
+        console.log(data);
+        if(data["error"]) setText("No transcription");
+        else(setText(data))
+      })
       .catch(error => console.log(error))
     },[])
 

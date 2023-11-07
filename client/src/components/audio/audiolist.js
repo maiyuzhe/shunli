@@ -1,20 +1,20 @@
 const { useEffect, useState } = require("react");
 import AudioEntry from "./audioentry";
 import UploadButton from "../upload/uploadbutton";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser } from "@auth0/nextjs-auth0/client"
 
 function AudioList(){
 
     const [audioFiles, setAudioFiles] = useState();
+
+    const {user} = useUser();
     
-
-
     function appendAudio(data){
       setAudioFiles([...audioFiles, data])
     };
 
     useEffect(() => {
-        fetch('http://localhost:5000/audio_stream')
+        fetch(`http://localhost:5000/audio_stream/${user.email}`)
         .then(res => res.json())
         .then(data => setAudioFiles(data))
         .catch(error => console.log(error))

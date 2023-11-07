@@ -23,6 +23,7 @@ class Vocabulary(db.Model):
 	term = db.Column(db.String(50))
 	definition = db.Column(db.String(50))
 	translation = db.Column(db.String(50))
+	email = db.Column(db.String(50))
 
 class Upload(db.Model):
 	__tablename__ = "uploads"
@@ -91,13 +92,17 @@ class UploadFile(Resource):
 					}, 201
 		except:
 			return {"error": "File already exists in database"}, 400
-	def get(self):
+api.add_resource(UploadFile, '/audio_stream')
+
+class FetchUserUploads(Resource):
+	def get(self, email):
 		try:
-			audio_files = [{"id": upload.id, "filename": upload.filename, "email": upload.email} for upload in Upload.query.all()]
+			audio_files = [{"id": upload.id, "filename": upload.filename, "email": upload.email} for upload in Upload.query.filter_by(email=email)]
 			return make_response(audio_files, 200)
 		except:
 			return {"error": "Database empty"}, 400
-api.add_resource(UploadFile, '/audio_stream')
+api.add_resource(FetchUserUploads, '/audio_stream/<string:email>')
+
 
 class DownloadById(Resource):
 	def get(self, id):
@@ -219,3 +224,12 @@ class VocabularyById(Resource):
 		except:
 			return {"error": "resource not found"}, 404
 api.add_resource(VocabularyById, '/vocabulary/<int:id>')
+
+# class DownloadByEmail(Resource):
+# 	def get(self, email):
+# 		try:
+# 			audio_files = Upload.filter_by(email = email)
+# 		except:
+# 			print("couldn't find email!")
+# 			return {"error", "404 Couldn't find user's email!"}, 404
+# api.add_resource(DownloadByEmail, '/users/<string:email>')
