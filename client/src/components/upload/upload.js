@@ -26,21 +26,8 @@ function Upload({appendAudio}) {
         body: formData
       })
       .then(res=> res.json())
-      .then(data => {
-        appendAudio(data)
-        fetch('http://localhost:5000/transcriptions', {
-          method: "POST",
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify({
-            audio_id: data.id,
-            filename: data.filename
-          })
-        })
-      })
+      .then(data => appendAudio(data))
       .catch(error => console.log(error))
-
     }
   };
 

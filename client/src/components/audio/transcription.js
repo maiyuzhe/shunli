@@ -3,11 +3,13 @@ import Loader from "./loader"
 import TranscriptWord from "./transcriptword"
 import DefinitionPopUp from "./definition"
 
-function Transcription({audioRef, id}){
+function Transcription({audioRef}){
 
     const [text, setText] = useState("Temp")
     const [loading, setLoad] = useState(true)
     const [defArray, setArray] = useState([])
+
+    let id = 0
 
     function updateArray(word){
       setArray([...defArray, word])
@@ -22,8 +24,7 @@ function Transcription({audioRef, id}){
       fetch(`http://localhost:5000/transcriptions/${id}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        if(data["error"]) setText("No transcription");
+        if(data["error"]) setText("無反饋 testing");
         else(setText(data))
       })
       .catch(error => console.log(error))
@@ -31,6 +32,7 @@ function Transcription({audioRef, id}){
 
     function transcribe(){
         setLoad(false)
+        
         fetch(`http://localhost:5000/transcriptions/${id}`, {
           method: "PATCH",
           headers: {
@@ -51,15 +53,25 @@ function Transcription({audioRef, id}){
     return (
       <div className={"absolute top-10"}>
         <div
-          className={loading ? "w-[33rem] py-1 pl-2 animate-fade-down h-full flex flex-wrap text-lg" : "hidden"}
+          className={`w-[33rem] py-1 pl-2 animate-fade-down h-full flex flex-wrap text-lg" ${loading ? "" : "hidden"}`}
         >
           {text.split("").map((word, index) => {
-            return <TranscriptWord word={word} key={index} index={index} defArray={defArray} updateArray={updateArray} filterArray={filterArray}/>
+            if(word.charCodeAt(0) > 127)
+              return <TranscriptWord word={word} key={index} index={index} 
+              defArray={defArray} updateArray={updateArray} filterArray={filterArray}/>;
+            if(word == " ")
+              return <p>&nbsp;</p>
+            else
+              return <p>{word}</p>;
           })}
         </div>
         <div className="flex justify-center items-center w-[33rem]">
-          {!loading? <Loader/> : <button onClick={transcribe}
-          className="antialiased transition ease-in-out font-gothic border-black border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"
+          {!loading ? 
+          <Loader/> 
+          : 
+          <button onClick={transcribe}
+          className="antialiased transition ease-in-out font-gothic border-black 
+          border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"
           >
             {text!="Press Transcribe!" ? "RESUBMIT TRANSCRIPTION": "TRANSCRIBE"}
           </button>}
