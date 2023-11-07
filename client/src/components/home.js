@@ -8,35 +8,10 @@ function Home() {
 
   const { user } = useUser();
 
-  const [audioFiles, setAudioFiles] = useState([{
-    id: 1,
-    filename: "file",
-  }])
-  
-  useEffect(() => {
-      fetch('http://localhost:5000/audio_stream')
-      .then(res => res.json())
-      .then(data => setAudioFiles(data))
-      .catch(error => console.log(error))
-  },[])
-
-  function appendAudio(data){
-    setAudioFiles([...audioFiles, data])
-  }
-
   return (
     <main className="flex flex-col items-center h-screen">
       {user ? 
-      <div 
-      className="flex flex-col mt-24 w-screen items-center overflow-y-scroll"
-      >
-        <div>
-          <UploadButton appendAudio={appendAudio}/>
-        </div>
-        <div className="flex flex-col items-center mt-6 ml-2">
-          <AudioList audioFiles={audioFiles}/>
-        </div>
-      </div> 
+      <AudioList/>
       : 
       <div
       className="flex flex-col items-center relative mt-24"

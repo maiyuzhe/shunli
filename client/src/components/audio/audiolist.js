@@ -1,18 +1,35 @@
 const { useEffect, useState } = require("react");
 import AudioEntry from "./audioentry";
+import UploadButton from "../upload/uploadbutton";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-function AudioList({audioFiles}){
+function AudioList(){
 
-    const { user } = useUser()
+    const [audioFiles, setAudioFiles] = useState();
+    
 
-    const filteredAudio = audioFiles.filter(file => file.email ==user.email )
+
+    function appendAudio(data){
+      setAudioFiles([...audioFiles, data])
+    };
+
+    useEffect(() => {
+        fetch('http://localhost:5000/audio_stream')
+        .then(res => res.json())
+        .then(data => setAudioFiles(data))
+        .catch(error => console.log(error))
+    },[])
 
     return (
-        <div className="flex flex-col items-center w-[45rem] overflow-y-scroll">
-            {audioFiles ? filteredAudio.map((audioFile) => {
+        <div 
+        className="flex flex-col mt-24 w-screen items-center overflow-y-scroll"
+        >
+            <div>
+                <UploadButton appendAudio={appendAudio}/>
+            </div>
+            {audioFiles ? audioFiles.map((audioFile) => {
                 return <AudioEntry id = {audioFile.id} key ={audioFile.name} name={audioFile.filename}/>
-            }) : <p>upload files</p>}
+            }) : <p>upload files!</p>}
         </div>
     )
 }
