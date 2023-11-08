@@ -7,14 +7,20 @@ function Vocabulary(){
 
 	const {user} = useUser()
 
-  const [vocabulary, setVocab] = useState([{"word": "暂时", "definition": "简介"}])
+  const [vocabulary, setVocab] = useState([{"word": "暂时", "definition": "简介", "id": 0}])
 
   useEffect(()=> {
     fetch('http://localhost:5000/vocabulary')
     .then(res=>res.json())
     .then(data => setVocab(data.vocabulary))
-    .catch(error => setVocab([{"word": "暂时", "definition": "简介"}]))
+    .catch(error => setVocab([{"word": "錯誤", "definition": "Vocabulary Not Found", "id": 0}]))
   },[])
+
+  function filterVocab(id){
+    const newVocab = vocabulary.filter(term=>term.id != id);
+    console.log(newVocab);
+    setVocab(newVocab);
+  }
 
 	return (
 		<main
@@ -36,8 +42,12 @@ function Vocabulary(){
             {user ? user.name : ""}'s Vocabulary
           </p>
         </div>
-        <div className="flex flex-col mt-24">
-          {vocabulary.map( vocab => <Term vocab={vocab} key={vocab.word}/>)}
+        {/* Vocabulary container */}
+        <div className="flex flex-col mt-24 w-3/4 items-center">
+          {vocabulary.map( vocab => 
+          <Term vocab={vocab} 
+          filterVocab={filterVocab}
+          key={vocab.word}/>)}
         </div>
 			</div>
 		</main>

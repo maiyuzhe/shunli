@@ -13,6 +13,11 @@ function AudioList(){
       setAudioFiles([...audioFiles, data])
     };
 
+    function removeEntry(id){
+      const newAudioFiles = audioFiles.filter(audio=> audio.id != id);
+      setAudioFiles(newAudioFiles);
+    }
+
     useEffect(() => {
         fetch(`http://localhost:5000/audio_stream/${user.email}`)
         .then(res => res.json())
@@ -28,7 +33,10 @@ function AudioList(){
                 <UploadButton appendAudio={appendAudio}/>
             </div>
             {audioFiles ? audioFiles.map((audioFile) => {
-                return <AudioEntry id = {audioFile.id} key ={audioFile.name} name={audioFile.filename}/>
+                return <AudioEntry id = {audioFile.id} 
+                key ={audioFile.name} 
+                name={audioFile.filename}
+                removeEntry={removeEntry}/>
             }) : <p>upload files!</p>}
         </div>
     )

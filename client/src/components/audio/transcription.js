@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Loader from "./loader"
 import TranscriptWord from "./transcriptword"
 import DefinitionPopUp from "./definition"
+import GenericButton from "../buttons/genericButton"
 
 function Transcription({audioRef}){
 
@@ -69,13 +70,10 @@ function Transcription({audioRef}){
           {!loading ? 
           <Loader/> 
           : 
-          <button onClick={transcribe}
-          className="antialiased transition ease-in-out font-gothic border-black 
-          border rounded-md px-2 mb-2 hover:scale-105 hover:duration-150"
-          >
-            {text!="Press Transcribe!" ? "RESUBMIT TRANSCRIPTION": "TRANSCRIBE"}
-          </button>}
+          <GenericButton propFunc={transcribe} 
+          buttonLabel={text=="無反饋 testing" ? "Transcribe" : "Resubmit Transcription"}/>}
         </div>
+        
         <DefinitionPopUp word={defArray}/>
       </div>
     )

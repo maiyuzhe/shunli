@@ -23,11 +23,13 @@ function UploadButton({appendAudio}){
         上傳
       </p>
       <button onClick={() => setUpload(!uploadTrue)}
-      className={uploadTrue ? "transition-all delay-150 absolute top-1 left-36 text-black font-black w-4 hover:scale-150 hover:delay-0" : "transition-all absolute top-1 left-72 text-black font-black w-4 hover:scale-150 hover:delay-0"}
+      className={uploadTrue ? "transition-all delay-150 absolute top-1 left-36 text-black font-black w-4 hover:scale-150 hover:delay-0" 
+      : "transition-all absolute top-1 left-72 text-black font-black w-4 hover:scale-150 hover:delay-0"}
 			>
         {uploadTrue ? "+" : "-"}
       </button>
-      <div className={uploadTrue ? "transition-all invisible absolute top-1": "animate-fade-down animate-once animate-duration-500 visible absolute top-8"}>
+      <div className={uploadTrue ? "transition-all invisible absolute top-1": 
+      "animate-fade-down animate-once animate-duration-500 visible absolute top-8"}>
         <Upload appendAudio={appendAudio}/>
       </div>
     </div>

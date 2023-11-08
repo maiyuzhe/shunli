@@ -1,3 +1,4 @@
+import GenericButton from "@/components/buttons/genericButton"
 import Navbar from "../components/navbar"
 import { useUser } from "@auth0/nextjs-auth0/client"
 
@@ -18,20 +19,18 @@ function Account(){
 					alt="profile-pic" 
 					src={user ? user.picture : ""}
 				/>
-				<h1
-				  className="mt-4"
-				>
-					{user ? user.name :""}
-					<br/>
-					{user ? user.email : ""}
-					<br/>
-					Uploads:
-				</h1>
-				<button
-				  className="mb-4 border border-black rounded-lg px-2"
-				>
-					Clear Account
-				</button>
+				{user ?
+					<h1
+						className="mt-4"
+					>
+						{user.name}
+						<br/>
+						{user.email}
+						<br/>
+						Uploads:
+					</h1>
+				: ""}
+				<GenericButton buttonLabel={"Clear Account"}/>
 			</div>
 		</main>
 	)

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react"
 import { useUser } from "@auth0/nextjs-auth0/client";
+import GenericButton from "../buttons/genericButton";
 
 function Record({appendAudio}){
 
@@ -89,68 +90,41 @@ function Record({appendAudio}){
       .catch(error => console.log(error))
   }
 
+  function toggleRecord()
+  {
+    if (recordingStatus === true) stopRecording();
+    else startRecording();
+  }
+
   return (
     <div
     className="flex flex-col items-center"
     >
-      <button
-        onClick={getAudioPermission}
-          className={permission ? "hidden"
-          :
-          "antialiased m-2 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
-          }
-        >
-        Get Permission
-      </button>
+      {permission ? "" : <GenericButton propFunc={getAudioPermission} buttonLabel={"Get Permission"}/>}
       <div
         className="flex flex-row"
       >
         <div
           className="relative"
         >
-          <button
-            className={!permission ? "hidden": 
-            "antialiased mx-1 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
-            }
-            onClick={() => {
-              if (recordingStatus === true){
-                stopRecording()
-              }
-              else{
-                startRecording()
-              }
-            }}
-          >
-            {!recordingStatus ? "Record" : "Stop Recording"}
-          </button>
-          <div
-            className={recordingStatus ? 
-              "absolute right-0 top-0 animate-ping animate-duration-[1500ms] animate-ease-out bg-red-500 rounded-full w-3 h-3 border border-black"
-              :
-              "hidden"
-            }
-          >
-          </div>
+          {permission ? <GenericButton 
+          propFunc={toggleRecord} 
+          buttonLabel={recordingStatus ? "Stop Recording" : "Record"}/> : ""}
+          {/* Flashing red circle to indicate recording */}
+          {recordingStatus ? <div className="absolute right-0 top-0 animate-ping 
+          animate-duration-[1500ms] animate-ease-out bg-red-500 
+          rounded-full w-3 h-3 border border-black"/>: ""}
         </div>
-        <button
-          className={audio ?
-            "antialiased mx-1 transition ease-in-out font-gothic border-black border rounded-md px-2 hover:scale-105 hover:duration-150"
-            :
-            "hidden"
-          }
-          onClick={handleUpload}
-        >
-          Upload Recording
-        </button>
+        {audio ? <GenericButton propFunc={handleUpload} buttonLabel={"Upload Recording"} />: ""}
       </div>
       <br/>
-      <div className={audio ? 
-        "absolute animate-fade-down animate-once top-16 mt-4 border border-black rounded-full w-76"
-        :
-        "hidden"  
-      }>
+      {/*Gives a nice preview with controls for the audio*/}
+      {audio ? 
+      <div className="absolute animate-fade-down animate-once 
+      top-16 mt-4 border border-black rounded-full w-76">
         <audio src={audio} controls controlsList="timeline play nodownload foobar"></audio>
-      </div>
+      </div> 
+      : ""}
     </div>
   )
 }
