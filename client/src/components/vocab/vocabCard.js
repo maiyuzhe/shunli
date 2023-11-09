@@ -6,7 +6,7 @@ function VocabCard({user}){
   const [vocabulary, setVocab] = useState([])
 
   useEffect(()=> {
-    fetch('http://localhost:5000/vocabulary')
+    fetch(`http://localhost:5000/vocabulary/${user.email}`)
     .then(res=>res.json())
     .then(data => setVocab(data.vocabulary))
     .catch(error => setVocab([]))

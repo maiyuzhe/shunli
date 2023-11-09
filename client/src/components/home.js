@@ -1,5 +1,5 @@
 import AudioList from "./audio/audiolist"
-import Navbar from "./navbar"
+import Navbar from "./navbar/navbar"
 import { useUser } from "@auth0/nextjs-auth0/client"
 
 
