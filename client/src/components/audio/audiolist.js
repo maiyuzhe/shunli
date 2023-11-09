@@ -29,9 +29,7 @@ function AudioList(){
         <div 
         className="flex flex-col mt-24 w-screen items-center overflow-y-scroll"
         >
-            <div>
-                <UploadButton appendAudio={appendAudio}/>
-            </div>
+            <UploadButton appendAudio={appendAudio}/>
             {audioFiles ? audioFiles.map((audioFile) => {
                 return <AudioEntry id = {audioFile.id} 
                 key ={audioFile.name} 

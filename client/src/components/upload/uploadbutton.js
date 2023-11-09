@@ -7,9 +7,9 @@ function UploadButton({appendAudio}){
 
   return (
     <div className={
-      uploadTrue ? "transition-all delay-150 flex justify-center relative w-80 bg-white h-9 rounded m-2"
+      uploadTrue ? "transition-all delay-150 flex justify-center relative w-80 bg-white h-9 rounded m-2 overflow-hidden"
       :
-      "transition-all flex justify-center relative w-80 h-48 bg-white rounded"
+      "transition-all flex justify-center relative w-80 h-48 bg-white rounded overflow-hidden"
     }
     >
       <p
