@@ -11,7 +11,7 @@ function Account(){
 	const router = useRouter();
 
 	useEffect(()=>{
-		if(!user)router.push('http://localhost:3000/');
+		if(!user)router.push('/');
 	})
 
 	return (
