@@ -30,7 +30,8 @@ function NavbarDropdown({user}){
               <img alt="user" src={user.picture}/>
           </a>
       </div> 
-      <div className={`${dropdownOpen ? `top-full opacity-100 visible` : 'top-[110%] invisible opacity-0'} absolute w-42 right-4 mt-2 rounded border-[.5px] border-light bg-black bg-opacity-80 py-1 shadow-card transition-all`}>
+      <div className={`${dropdownOpen ? `top-full opacity-100 visible` : 'top-[110%] invisible opacity-0'} 
+      absolute w-42 right-4 mt-2 rounded border-[.5px] border-light bg-black bg-opacity-80 py-1 shadow-card transition-all`}>
           <Link
               href='/account'
               className="cursor-pointer block py-2 px-5 text-base font-gothic t

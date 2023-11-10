@@ -9,7 +9,7 @@ function AccountCard({user}){
       <img 
         className="rounded-full w-48 h-48 mt-4 border border-black border-2"
         alt="profile-pic" 
-        src={user ? user.picture : ""}
+        src={user.picture}
       />
       {user ?
         <h1
