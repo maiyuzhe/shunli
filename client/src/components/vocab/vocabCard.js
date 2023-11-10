@@ -28,10 +28,10 @@ function VocabCard({user}){
         <img 
           className="rounded-full w-12 h-12 m-4 border border-black border-2 bg-black"
           alt="profile-pic" 
-          src={user ? user.picture: ""}
+          src={user?.picture}
         />
         <p>
-          {user ? user.name : ""}'s Vocabulary
+          {user?.name}'s Vocabulary
         </p>
       </div>
       {/* Vocabulary container */}
