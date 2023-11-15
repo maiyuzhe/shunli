@@ -21,7 +21,11 @@ function AudioList(){
     useEffect(() => {
         fetch(`http://localhost:5000/audio_stream/${user.email}`)
         .then(res => res.json())
-        .then(data => setAudioFiles(data))
+        .then(data => {
+            if(data["error"]) setAudioFiles([]);
+            else setAudioFiles(data);
+            
+        })
         .catch(error => console.log(error))
     },[])
 

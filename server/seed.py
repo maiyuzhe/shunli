@@ -8,7 +8,7 @@ from random import randint, choice as rc
 
 # Local imports
 from app import app
-from app import db
+from models import db
 
 if __name__ == '__main__':
     # fake = Faker()

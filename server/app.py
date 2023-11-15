@@ -8,50 +8,16 @@ from whisper import speech_to_text, test
 import validators
 from yt2wav import yt2wav
 from scraper import scrape
+from models import db, Transcription, Upload, Vocabulary
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+db.init_app(app)
 
 CORS(app)
 api = Api(app)
-
-class Vocabulary(db.Model):
-	__tablename__ = 'vocabulary'
-	id = db.Column(db.Integer, primary_key=True)
-	term = db.Column(db.String(50))
-	definition = db.Column(db.String(50))
-	translation = db.Column(db.String(50))
-	email = db.Column(db.String(50))
-
-class Upload(db.Model):
-	__tablename__ = "uploads"
-	id = db.Column(db.Integer, primary_key=True)
-	filename = db.Column(db.String(50))
-	data = db.Column(db.LargeBinary)
-	email = db.Column(db.String(50))
-	@validates("filename")
-	def validates_filename(self, key, filename):
-		if filename not in Upload.query.all():
-			return filename
-		raise ValueError("File name already exitsts")
-
-class Transcription(db.Model):
-  __tablename__ = "transcriptions"
-  id = db.Column(db.Integer, primary_key=True)
-  filename = db.Column(db.String(50))
-  transcription = db.Column(db.String(50))
-  @validates("transcription")
-  def validates_transcription(self, key, transcription):
-    if transcription != "":
-      return transcription
-    raise ValueError("Transcription Blank!")
-  @validates("filename")
-  def validates_filename(self, key, filename):
-    if filename not in Transcription.query.all():
-      return filename
-    raise ValueError("File name already exitsts")
 
 class UploadFile(Resource):
 	def post(self):
