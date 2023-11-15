@@ -11,6 +11,16 @@ function AudioList(){
     
     function appendAudio(data){
       setAudioFiles([...audioFiles, data])
+      fetch(`http://localhost:5000/transcriptions`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            upload_id: data.id,
+            filename: data.filename
+        })
+      })
     };
 
     function removeEntry(id){

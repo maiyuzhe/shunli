@@ -17,17 +17,18 @@ metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metadata)
 
 class Upload(db.Model):
-	__tablename__ = "uploads"
-	id = db.Column(db.Integer, primary_key=True)
-	filename = db.Column(db.String(50))
-	data = db.Column(db.LargeBinary)
-	email = db.Column(db.String(50))
-	@validates("filename")
-	def validates_filename(self, key, filename):
-		if filename not in Upload.query.all():
-			return filename
-		raise ValueError("File name already exitsts")
-  
+  __tablename__ = "uploads"
+  id = db.Column(db.Integer, primary_key=True)
+  filename = db.Column(db.String(50))
+  data = db.Column(db.LargeBinary)
+  email = db.Column(db.String(50))
+  transcript = db.relationship("Transcription", backref="upload", lazy=True)
+  vocabularies = db.relationship("Vocabulary", backref="upload", lazy=True)
+  @validates("filename")
+  def validates_filename(self, key, filename):
+    if filename not in Upload.query.all():
+      return filename
+    raise ValueError("File name already exitsts")
 
 class Vocabulary(db.Model):
 	__tablename__ = 'vocabulary'
@@ -35,13 +36,14 @@ class Vocabulary(db.Model):
 	term = db.Column(db.String(50))
 	definition = db.Column(db.String(50))
 	translation = db.Column(db.String(50))
-	email = db.Column(db.String(50))
+	upload_id = db.Column(db.Integer, db.ForeignKey('uploads.id'), nullable=False)
 
 class Transcription(db.Model):
   __tablename__ = "transcriptions"
   id = db.Column(db.Integer, primary_key=True)
   filename = db.Column(db.String(50))
   transcription = db.Column(db.String(50))
+  upload_id = db.Column(db.Integer, db.ForeignKey('uploads.id'), nullable=False)
   @validates("transcription")
   def validates_transcription(self, key, transcription):
     if transcription != "":

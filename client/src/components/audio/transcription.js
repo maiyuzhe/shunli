@@ -4,13 +4,12 @@ import TranscriptWord from "./transcriptword"
 import DefinitionPopUp from "./definition"
 import GenericButton from "../buttons/genericButton"
 
-function Transcription({audioRef}){
+function Transcription({audioRef, id}){
 
     const [text, setText] = useState("Temp")
     const [loading, setLoad] = useState(true)
     const [defArray, setArray] = useState([])
-
-    let id = 0
+    const [transcriptionId, setId] = useState()
 
     function updateArray(word){
       setArray([...defArray, word])
@@ -22,11 +21,14 @@ function Transcription({audioRef}){
     }
 
     useEffect(() => {
-      fetch(`http://localhost:5000/transcriptions/${id}`)
+      fetch(`http://localhost:5000/transcriptions/upload/${id}`)
       .then(res => res.json())
       .then(data => {
         if(data["error"]) setText("無反饋 testing");
-        else(setText(data))
+        else{
+          setText(data.transcription);
+          setId(data.id)
+        }
       })
       .catch(error => console.log(error))
     },[])
@@ -34,7 +36,7 @@ function Transcription({audioRef}){
     function transcribe(){
         setLoad(false)
         
-        fetch(`http://localhost:5000/transcriptions/${id}`, {
+        fetch(`http://localhost:5000/transcriptions/${transcriptionId}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json"
@@ -56,7 +58,7 @@ function Transcription({audioRef}){
         <div
           className={`w-[33rem] py-1 pl-2 animate-fade-down h-full flex flex-wrap text-lg" ${loading ? "" : "hidden"}`}
         >
-          {text.split("").map((word, index) => {
+          {text?.split("").map((word, index) => {
             if(word.charCodeAt(0) > 127)
               return <TranscriptWord word={word} key={index} index={index} 
               defArray={defArray} updateArray={updateArray} filterArray={filterArray}/>;

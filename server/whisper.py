@@ -14,6 +14,9 @@ def query(filename):
     with open(filename, "rb") as f:
         data = f.read()
     response = requests.post(API_URL, headers=headers, data=data)
+    print(response.status_code)
+    if response.status_code == 413:
+        return {"text": "file unable to be transcribed, too large."}
     return response.json()
 
 def clean_up(file_name):
@@ -39,8 +42,6 @@ def speech_to_text(url, file_name):
 
     full_text = []
 
-    
-
     for flac_audio in natsorted(os.listdir(f'./{folder_name}')):
         output = query(f"./{folder_name}/{flac_audio}")
         try:
@@ -61,8 +62,3 @@ def speech_to_text(url, file_name):
     print(transcribed_text)
 
     return transcribed_text
-
-def test():
-    return "test"
-
-

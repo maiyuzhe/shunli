@@ -76,16 +76,6 @@ function Record({appendAudio}){
       .then(res=> res.json())
       .then(data => {
         appendAudio(data)
-        fetch('http://localhost:5000/transcriptions', {
-          method: "POST",
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify({
-            audio_id: data.id,
-            filename: data.filename
-          })
-        })
       })
       .catch(error => console.log(error))
   }
