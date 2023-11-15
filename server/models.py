@@ -16,14 +16,6 @@ metadata = MetaData(naming_convention=convention)
 
 db = SQLAlchemy(metadata=metadata)
 
-class Vocabulary(db.Model):
-	__tablename__ = 'vocabulary'
-	id = db.Column(db.Integer, primary_key=True)
-	term = db.Column(db.String(50))
-	definition = db.Column(db.String(50))
-	translation = db.Column(db.String(50))
-	email = db.Column(db.String(50))
-
 class Upload(db.Model):
 	__tablename__ = "uploads"
 	id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +27,15 @@ class Upload(db.Model):
 		if filename not in Upload.query.all():
 			return filename
 		raise ValueError("File name already exitsts")
+  
+
+class Vocabulary(db.Model):
+	__tablename__ = 'vocabulary'
+	id = db.Column(db.Integer, primary_key=True)
+	term = db.Column(db.String(50))
+	definition = db.Column(db.String(50))
+	translation = db.Column(db.String(50))
+	email = db.Column(db.String(50))
 
 class Transcription(db.Model):
   __tablename__ = "transcriptions"

@@ -22,6 +22,7 @@ api = Api(app)
 class UploadFile(Resource):
 	def post(self):
 		try:
+			#This is if it's a youtube video
 			new_file = ""
 			if request.is_json:
 				print(request.json['email'])
@@ -41,6 +42,7 @@ class UploadFile(Resource):
 					"id": upload.id,
 					"email": upload.email
 					}, 201
+			#This is for a recording or upload
 			else:
 				email = request.form.get('email')
 				new_file = request.files['file']
@@ -190,12 +192,3 @@ class VocabularyById(Resource):
 		except:
 			return {"error": "resource not found"}, 404
 api.add_resource(VocabularyById, '/vocabulary/<int:id>')
-
-# class DownloadByEmail(Resource):
-# 	def get(self, email):
-# 		try:
-# 			audio_files = Upload.filter_by(email = email)
-# 		except:
-# 			print("couldn't find email!")
-# 			return {"error", "404 Couldn't find user's email!"}, 404
-# api.add_resource(DownloadByEmail, '/users/<string:email>')
