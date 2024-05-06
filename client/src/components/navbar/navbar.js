@@ -1,19 +1,38 @@
+import NavbarLinks from "./links";
 import NavbarDropdown from "./navbarDropdown";
 
 function Navbar({user}){
 
+    const links = [
+        {
+            title: "Shunli",
+            ch_back: "順利",
+            destination: "/"
+        },
+        {
+            title: "Analyze",
+            ch_back: "分析",
+            destination: "/"
+        },
+        {
+            title: "Texts",
+            ch_back: "文件",
+            destination: "/texts"
+        },
+        {
+            title: "Explore",
+            ch_back: "浏览",
+            destination: "/explore"
+        }
+    ]
+
     return (
-        <div className="flex justify-items-stretch fixed top-0 z-40
-        bg-white w-screen p-4 bg-opacity-50 border-b-2 border-white">
-            <a
-              href="/" 
-              className="text-2xl left-0 text-black font-gothic cursor-pointer">
-                Shunli
-            </a>
-            <h1 className="cursor-default text-3xl fixed left-16 text-black font-gothic 
-            blur-[1.5px] opacity-50 hover:scale-110 hover:blur-none duration-300">
-                順利
-            </h1>
+        <div className="flex justify-items-stretch fixed top-0 z-50
+        bg-white/50 w-screen p-4 border-b-2 border-white">
+            {links.map((link) => <NavbarLinks 
+            destination={link.destination} ch_back={link.ch_back}
+            title={link.title} key={link.title}/>)}
+
             {user ? <NavbarDropdown user={user}/> : ""}
         </div>
     )

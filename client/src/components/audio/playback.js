@@ -13,7 +13,7 @@ function Playback({id}){
     }
 
     return (
-        <div className="flex  animate-fade transition ease-in-out bg-black text-white w-6 h-6 rounded border border-black hover:bg-white hover:text-black hover:scale-105 justify-center">
+        <div className="flex animate-fade transition ease-in-out bg-black text-white w-6 h-6 rounded border border-black hover:bg-white hover:text-black hover:scale-105 justify-center">
             <audio 
                 ref={audioRef} 
                 src={`http://localhost:5000/audio_stream/${id}`}
