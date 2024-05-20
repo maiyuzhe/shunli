@@ -16,7 +16,7 @@ function Home() {
       className="flex flex-col items-center relative mt-24"
       >
         <div
-        className="transition ease-in-out blur-sm hover:blur-none invert"
+        className="transition ease-in-out blur-sm hover:blur-none dark:invert"
         >
           <img 
           src="https://upload.wikimedia.org/wikipedia/commons/4/4e/%E6%96%87-order.gif" 
@@ -25,7 +25,7 @@ function Home() {
         </div>
         <a
         href='/api/auth/login'
-        className="absolute top-10 mix-blend-difference	transition ease-in-out text-5xl border border-white rounded px-4 mt-24 font-gothic hover:scale-110 hover:duration-150"
+        className="absolute top-10 mix-blend-difference	transition text-white dark:text-black ease-in-out text-5xl border border-white rounded px-4 mt-24 font-gothic hover:scale-110 hover:duration-150"
         >
           Login
         </a>

@@ -44,7 +44,7 @@ function NavbarDropdown({user}){
             <img alt="user" src={user.picture}/>
       </button> 
       <div className={`${dropdownOpen ? 'top-full opacity-100 visible' : 'top-[110%] invisible opacity-0'} 
-      absolute w-42 right-4 mt-2 rounded border-[.5px] border-light bg-black/50 dark:bg-white/50 py-1 shadow-card transition-all`}
+      absolute w-42 right-4 mt-2 rounded border-[.5px] border-black dark:border-white bg-black/50 dark:bg-white/50 py-1 shadow-card transition-all`}
       >
           {menuItems.map((menuItem) => <DropdownItem name={menuItem.name} destination={menuItem.destination}/>)}
       </div>

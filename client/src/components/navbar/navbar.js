@@ -28,7 +28,7 @@ function Navbar({user}){
 
     return (
         <div className="flex justify-items-stretch fixed top-0 z-50
-        bg-white/50 w-screen p-4 border-b-2 border-white">
+        bg-black/50 dark:bg-white/50 w-screen p-4 border-b-2 border-black dark:border-white">
             {links.map((link) => <NavbarLinks 
             destination={link.destination} ch_back={link.ch_back}
             title={link.title} key={link.title}/>)}

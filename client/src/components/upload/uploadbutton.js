@@ -6,11 +6,11 @@ function UploadButton({appendAudio}){
   const [uploadTrue, setUpload] = useState(true)
 
   return (
-    <div className={
-      uploadTrue ? "transition-all delay-150 flex justify-center relative w-80 bg-white h-9 rounded m-2 overflow-hidden"
+    <div className={`bg-black/50 dark:bg-white
+    ${uploadTrue ? "transition-all delay-150 flex justify-center relative w-80 h-9 rounded m-2 overflow-hidden"
       :
-      "transition-all flex justify-center relative w-80 h-48 bg-white rounded overflow-hidden"
-    }
+      "transition-all flex justify-center relative w-80 h-48  rounded overflow-hidden"
+    }`}
     >
       <p
       className="absolute cursor-default left-1 top-1 text-black font-bold font-gothic"
