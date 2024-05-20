@@ -1,11 +1,26 @@
 import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
+import DropdownItem from "./DropdownItem";
 
 function NavbarDropdown({user}){
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   let menuRef = useRef();
+
+  const menuItems = [
+    {
+      name: "Account",
+      destination: "/account"
+    },
+    {
+      name: "Vocabulary",
+      destination: "/vocabulary"
+    },
+    {
+      name: "Log Out",
+      destination: "/api/auth/logout"
+    }
+  ]
 
   useEffect(() => {
       function handler(e) {
@@ -29,28 +44,9 @@ function NavbarDropdown({user}){
             <img alt="user" src={user.picture}/>
       </button> 
       <div className={`${dropdownOpen ? 'top-full opacity-100 visible' : 'top-[110%] invisible opacity-0'} 
-      absolute w-42 right-4 mt-2 rounded border-[.5px] border-light bg-black bg-opacity-80 py-1 shadow-card transition-all`}>
-          <Link
-              href='/account'
-              className="cursor-pointer block py-2 px-5 text-base font-gothic t
-              ext-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
-          >
-              Account Details
-          </Link>
-          <Link
-              href='/vocabulary'
-              className="cursor-pointer block py-2 px-5 text-base font-gothic 
-              text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
-          >
-              Vocabulary
-          </Link>
-          <a
-              href='/api/auth/logout'
-              className="cursor-pointer block py-2 px-5 text-base font-gothic 
-              text-body-color hover:bg-white hover:bg-opacity-5 hover:text-primary"
-          >
-              Logout
-          </a>
+      absolute w-42 right-4 mt-2 rounded border-[.5px] border-light bg-black/50 dark:bg-white/50 py-1 shadow-card transition-all`}
+      >
+          {menuItems.map((menuItem) => <DropdownItem name={menuItem.name} destination={menuItem.destination}/>)}
       </div>
     </div>
   )
