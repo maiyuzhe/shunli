@@ -1,12 +1,15 @@
 from pathlib import PurePath
 from pydub import AudioSegment
 import os
-from pydub import AudioSegment
 from pydub.silence import split_on_silence
 import fleep
+import asyncio
  
+ 
+loop = asyncio.get_event_loop()
 
-def convert_file(file_name):
+
+def convert_file(file_name: str):
     file_type = file_name.split(".")[1]
     with open(file_name, "rb") as f:
         info = fleep.get(f.read(128))
@@ -50,11 +53,22 @@ def convert_file(file_name):
     sound_file = AudioSegment.from_wav(f"{new_directory}.wav")
 
     audio_chunks = split_on_silence(sound_file, min_silence_len=1000, silence_thresh=-40 )
+
     
-    for i, chunk in enumerate(audio_chunks):
-        out_file = f"{new_directory}/{i}.flac".format(i)
-        print("exporting", out_file)
-        chunk.export(out_file, format="flac")
-        # audio = AudioSegment.from_wav(f"{new_directory}/chunk{i}.wav")
-        # audio.export(f"{new_directory}/chunk{i}.flac",format = "flac")
+    try:
+        loop.run_until_complete(export_flac_async(audio_chunks, new_directory))
+    except:
+        os.remove(f"{new_directory}.wav")
+        os.remove(f"./{new_directory}")
+
+
     os.remove(f"{new_directory}.wav")
+
+async def export_flac(chunk, out_file:str):
+    print("exporting", out_file)
+    await loop.run_in_executor(None, lambda: chunk.export(out_file, format="flac"))
+
+async def export_flac_async(chunks:list, new_directory:str):
+    for i, chunk in enumerate(chunks):
+        out_file = f"{new_directory}/{i}.flac".format(i)
+        await export_flac(chunk, out_file)

@@ -17,6 +17,8 @@ validators = "*"
 werkzeug = "*"
 bs4 = "*"
 fleep = "*"
+colorama = "*"
+dotenv = "*"
 
 [dev-packages]
 natsort = "*"
