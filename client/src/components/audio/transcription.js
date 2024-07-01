@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Loader from "./loader"
-import TranscriptWord from "./transcriptWord"
+import TranscriptWord from "./transcriptword"
 import DefinitionPopUp from "./definition"
 import GenericButton from "../buttons/genericButton"
 
