@@ -1,6 +1,6 @@
 const { useEffect, useState } = require("react");
-import AudioEntry from "./audioEntry";
-import UploadButton from "../upload/uploadButton";
+import AudioEntry from "./audiontry";
+import AudioButton from "../upload/uploadButton";
 import { useUser } from "@auth0/nextjs-auth0/client"
 
 function AudioList(){

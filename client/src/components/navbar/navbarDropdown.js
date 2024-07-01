@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import DropdownItem from "./DropdownItem";
+import DropdownItem from "./dropdownItem";
 
 function NavbarDropdown({user}){
 

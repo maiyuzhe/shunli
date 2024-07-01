@@ -25,7 +25,7 @@ function Home() {
         </div>
         <a
         href='/api/auth/login'
-        className="absolute top-10 mix-blend-difference	transition text-white dark:text-black ease-in-out text-5xl border border-white rounded px-4 mt-24 font-gothic hover:scale-110 hover:duration-150"
+        className="absolute top-10 mix-blend-difference	transition text-black dark:text-white  ease-in-out text-5xl border border-white rounded px-4 mt-24 font-gothic hover:scale-110 hover:duration-150"
         >
           Login
         </a>
